@@ -10,7 +10,9 @@ import Profile from './components/Profile';
 import Recovery from './components/Recovery';
 import Reset from './components/Reset';
 import PageNotFound from './components/PageNotFound';
-import LandingPage from './components/Landingpage';
+import LandingPage from './pages/Landingpage';
+import Social from './pages/Social';
+import Admin from './pages/Admin';
 
 
 /** auth middleware */
@@ -49,6 +51,14 @@ const router = createBrowserRouter([
     {
         path : '/landingpage',
         element : <LandingPage></LandingPage>
+    },
+    {
+        path : '/social',
+        element : <Social></Social>
+    },
+    {
+        path : '/admin',
+        element : <Admin></Admin>
     }
 ])
 
