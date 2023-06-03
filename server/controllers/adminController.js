@@ -5,19 +5,13 @@ import bearbrick from '../model/bearbrick.model.js'
   "name" : "bearbrick",
   "type" : "artist",
   "size" : "1000%",
-  "image" : "https://image.goxip.com/4_4Ofzr4kUBraPRKGLlTtZigULU=/fit-in/500x500/filters:format(jpg):quality(80):fill(white)/https:%2F%2Fimages.stockx.com%2Fimages%2FBearbrick-Pikachu-100-400-Set-Gold-Chrome-Ver.jpg",
-  "published" : ""
+  "image" : "https://image.goxip.com/4_4Ofzr4kUBraPRKGLlTtZigULU=/fit-in/500x500/filters:format(jpg):quality(80):fill(white)/https:%2F%2Fimages.stockx.com%2Fimages%2FBearbrick-Pikachu-100-400-Set-Gold-Chrome-Ver.jpg"
 }
 */
 export async function addItem(req, res){
     const newBearbrick = new bearbrick(req.body);
-      
-      newBearbrick.save((error, savedBearbrick) => {
-        if (error) {
-          return res.status(500).json({ error: error });
-        }
-        return res.status(201).json({ msg: "Bearbrick added successfully", bearbrick: savedBearbrick });
-      });
+    console.log(req.body);
+    newBearbrick.save().then(() => res.json('Bearbrick added!')).catch((err) => {console.log(err)});
       
 }
 

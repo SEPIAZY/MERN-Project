@@ -12,7 +12,8 @@ import Reset from './components/Reset';
 import PageNotFound from './components/PageNotFound';
 import LandingPage from './pages/Landingpage';
 import Social from './pages/Social';
-import Admin from './pages/Admin';
+import AddItem from './components/AddItem';
+import UpdateItem from './components/UpdateItem';
 
 
 /** auth middleware */
@@ -57,8 +58,12 @@ const router = createBrowserRouter([
         element : <Social></Social>
     },
     {
-        path : '/admin',
-        element : <Admin></Admin>
+        path : '/additem',
+        element : <AddItem></AddItem>
+    },
+    {
+        path : '/updateitem',
+        element : <UpdateItem></UpdateItem>
     }
 ])
 

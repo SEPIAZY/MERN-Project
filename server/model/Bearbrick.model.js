@@ -3,22 +3,15 @@ import mongoose from "mongoose";
 export const Bearbrick = new mongoose.Schema({
     name : {
         type: String,
-        required : [true],
-        unique: [true]
+        required : true
     },
     type: {
         type: String,
-        required: [true],
-        unique : false,
+        required: true
     },
     size: {
         type: String,
-        required : [true],
-        unique: true,
-    },
-    published: { 
-        type: Date, 
-        default: Date.now
+        required : true
     },
     image: { 
         type: String,

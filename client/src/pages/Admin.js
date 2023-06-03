@@ -7,6 +7,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { IoIosSearch } from "react-icons/io";
 import { FaTimes } from "react-icons/fa";
 import { styled } from "@mui/material/styles";
+import AddItemPanel from "../components/AddItem";
+
 
 export default function Admin() {
   const navigate = useNavigate();
@@ -22,52 +24,38 @@ export default function Admin() {
     setSearchTerm("");
   };
 
-  const handleFilter = (event) => {
-    setFilterValue(event.target.value);
-  };
 
-  const handleAddItem = () => {};
-  // <h1 className='px-8 py-2 text-3xl font-bold tracking-wider'>BEARBRICK Database</h1>
+  
   return (
     <main>
       <Navbar />
-      {/* <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-400"></hr> */}
-      <div className="container mx-auto">
-            <div className="flex flex-col justify-center items-start">
-                <h1 className="py-2 text-4xl font-bold tracking-wider">
-                    BEARBRICK Database
-                </h1>
-            </div>
-            <div className="flex flex-row py-2">
-                <IoIosSearch className="relative top-3 left-10 w-6 h-6 text-gray-500" />
-                <input
-                    type="text"
-                    placeholder="   Search"
-                    className="w-3/5 h-12 pl-10 pr-32 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent shadow-md"
-                />
-                {/* {searchTerm && (
-                    <button
-                    className="relative top-4 right-12 text-gray-400"
-                    onClick={handleClearSearch}
-                    >
-                    <FaTimes />
-                    </button>
-                )} */}
-                <button
-                    onClick={handleAddItem}
-                    className="w-28 h-12 bg-white text-black px-4 py-2 rounded-xl ml-2 shadow-md"
-                >
-                    Add Item
-                </button>
-                <button
-                    onClick={handleAddItem}
-                    className="w-24 h-12 bg-white text-black px-4 py-2 rounded-xl ml-2 shadow-md"
-                >
-                    Filter
-                </button>
-            </div>
+      <div className="container mx-auto py-6">
+        <div className="flex flex-col justify-center items-start">
+          <h1 className="px-6 py-3 text-4xl font-bold tracking-wider">
+            BEARBRICK Database
+          </h1>
+        </div>
+        <div className="flex flex-row">
+          <IoIosSearch className="relative top-3 left-10 w-6 h-6 text-gray-500" />
+          <input
+            type="text"
+            placeholder="   Search"
+            className="w-3/5 h-12 pl-10 pr-32 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent shadow-md"
+          />
+          <button
+            className="w-28 h-12 bg-white text-black px-4 py-2 rounded-xl ml-2 shadow-md"
+          >
+            Add Item
+          </button>
+          <button
+            className="w-24 h-12 bg-white text-black px-4 py-2 rounded-xl ml-2 shadow-md"
+          >
+            Filter
+          </button>
+          
+        </div>
+        
       </div>
-      
     </main>
   );
 }

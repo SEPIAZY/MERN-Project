@@ -89,7 +89,7 @@ export default function LandingPage() {
               <div className="card rounded-xl w-96 h-96 bg-white rounded-xl p-5 py-4 relative">
                 <button
                   onClick={() => like()}
-                  className="absolute top-7 right-9 w-12 h-12 rounded-full bg-white border border-gray-400 flex justify-center items-center"
+                  className="absolute top-7 right-9 w-12 h-12 rounded-full bg-white shadow flex justify-center items-center"
                 >
                   {toggle ? (
                     <>
@@ -134,7 +134,7 @@ export default function LandingPage() {
               <div className="card rounded-xl w-96 h-96 bg-white rounded-xl p-5 py-4 relative">
                 <button
                   onClick={() => like()}
-                  className="absolute top-7 right-9 w-12 h-12 rounded-full bg-white border border-gray-400 flex justify-center items-center"
+                  className="absolute top-7 right-9 w-12 h-12 rounded-full bg-white shadow flex justify-center items-center"
                 >
                   {toggle ? (
                     <>
@@ -175,7 +175,7 @@ export default function LandingPage() {
               <div className="card rounded-xl w-96 h-96 bg-white rounded-xl p-5 py-4 relative">
                 <button
                   onClick={() => like()}
-                  className="absolute top-7 right-9 w-12 h-12 rounded-full bg-white border border-gray-400 flex justify-center items-center"
+                  className="absolute top-7 right-9 w-12 h-12 rounded-full bg-white shadow  flex justify-center items-center"
                 >
                   {toggle ? (
                     <>
@@ -216,7 +216,7 @@ export default function LandingPage() {
               <div className="card rounded-xl w-96 h-96 bg-white rounded-xl p-5 py-4 relative">
                 <button
                   onClick={() => like()}
-                  className="absolute top-7 right-9 w-12 h-12 rounded-full bg-white border border-gray-400 flex justify-center items-center"
+                  className="absolute top-7 right-9 w-12 h-12 rounded-full bg-white shadow  flex justify-center items-center"
                 >
                   {toggle ? (
                     <>
@@ -257,7 +257,7 @@ export default function LandingPage() {
               <div className="card rounded-xl w-96 h-96 bg-white rounded-xl p-5 py-4 relative">
                 <button
                   onClick={() => like()}
-                  className="absolute top-7 right-9 w-12 h-12 rounded-full bg-white border border-gray-400 flex justify-center items-center"
+                  className="absolute top-7 right-9 w-12 h-12 rounded-full bg-white shadow flex justify-center items-center"
                 >
                   {toggle ? (
                     <>

@@ -116,4 +116,16 @@ export async function resetPassword({ username, password }){
     } catch (error) {
         return Promise.reject({ error })
     }
+
+}
+
+
+//add item fuction
+export async function addItem(item){
+    try {
+        const { data } = await axios.post('http://localhost:8080/api/additem', item);
+        return Promise.resolve({ data })
+    } catch (error) {
+        return Promise.reject({ error })
+    }
 }

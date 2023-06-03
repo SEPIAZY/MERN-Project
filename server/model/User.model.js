@@ -16,8 +16,21 @@ export const UserSchema = new mongoose.Schema({
         required : [true, "Please provide a unique email"],
         unique: true,
     },
-    bio: { type: String},
-    role: { type: String, default: 'user'},
+    profile: {
+        type: String,
+        required : [false]
+    },
+    bio: { 
+        type: String
+    },
+    role: { 
+        type: String, 
+        default: 'user'
+    },
+    item: {
+        type: Array,
+        default: []
+    }
 });
 
 export default mongoose.model.Users || mongoose.model('User', UserSchema);

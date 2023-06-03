@@ -39,9 +39,13 @@ export default function Register() {
 
   /** formik doensn't support file upload so we need to create this handler */
   const onUpload = async e => {
-    const base64 = await convertToBase64(e.target.files[0]);
-    setFile(base64);
-  }
+    try {
+      const base64 = await convertToBase64(e.target.files[0]);
+      setFile(base64);
+    } catch (error) {
+      console.error('File upload error:', error);
+    }
+  };
 
   return (
     <div className="container mx-auto">
@@ -59,9 +63,11 @@ export default function Register() {
           </div>
 
           <form className='py-0' onSubmit={formik.handleSubmit}>
-              <div className='profile flex justify-center py-2'>
+              <div className='profile flex justify-center py-2 '>
                   <label htmlFor="profile">
-                    <img src={file || avatar} className={styles.profile_img} alt="avatar" />
+                    <div className='w-36 h-36 rounded-full cursor-pointer shadow-m'>
+                        <img src={file || avatar} className="w-full h-full rounded-full" alt="avatar" />
+                    </div>
                   </label>
                   
                   <input onChange={onUpload} type="file" id='profile' name='profile' />
