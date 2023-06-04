@@ -116,7 +116,6 @@ export default function Navbar() {
                         Create Item
                       </a>
                       <a
-                        href="#"
                         className="block px-4 py-2 text-lg text-neutral-900 hover:bg-neutral-100 hover:text-neutral-900"
                         role="menuitem"
                         onClick={() => handleDropdownItemClick("/updateitem")}

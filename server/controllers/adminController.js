@@ -42,7 +42,7 @@ export async function getAllItems(req, res) {
     try {
       // Fetch all items from the database
       const items = await bearbrick.find();
-  
+
       return res.status(200).json({ items });
     } catch (error) {
       return res.status(500).json({ error: error.message });
@@ -75,4 +75,81 @@ export async function updateItem(req, res) {
       return res.status(500).json({ error: error.message });
     }
   }
-  
+
+/** GET: http://localhost:8080/api/getAllCards
+ * @param : {
+ * "name" : "BEARBRICK Jean"
+ * }
+ */
+
+const handleCardSearchResponse = (promise, res, errorMessage) => {
+  promise
+  .then((cards) => {
+    // Map the cards to include only the required fields
+    const filteredCards = cards.map(({ _id, name, type, image, size, createdAt }) => ({
+      id: _id,
+      name,
+      type,
+      image,
+      size,
+      createdAt
+    }));
+    res.json(filteredCards);
+  })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: errorMessage });
+    });
+};
+
+const createFilters = (req) => {
+  const filters = {};
+
+  ['name', 'type', 'size', 'createdAt'].forEach((field) => {
+    if (req.query[field]) {
+      filters[field] = req.query[field].trim();
+    }
+  });
+
+
+  if (req.query.name) {
+    // Create a case-insensitive regex to filter by name
+    filters.name = { $regex: new RegExp(req.query.name, 'i') };
+  }
+
+  if (req.query.type) {
+    const types = req.query.type.split(',').map((type) => type.trim());
+    filters.type = types;
+  }
+
+  if (req.query.size) {
+    const sizes = req.query.size.split(',').map((size) => size.trim());
+    filters.size = sizes;
+  }
+
+  return filters;
+};
+
+export async function getAllCards(req, res) {
+  if (req.query.id) {
+    const cardIds = req.query.id.split(',').map(id => id.trim());
+    handleCardSearchResponse(
+      bearbrick.find({ _id: { $in: cardIds } }),
+      res,
+      "An error occurred while fetching the cards."
+    );
+  } else {
+    const limit = parseInt(req.query.limit) || 27;
+    const offset = parseInt(req.query.offset) || 0;
+    const filters = createFilters(req);
+    console.log(filters);
+    handleCardSearchResponse(
+      bearbrick.find(filters)
+        .skip(offset)
+        .sort({ createdAt: -1 })
+        .limit(limit),
+      res,
+      "An error occurred while fetching matching items."
+    );
+  } 
+};

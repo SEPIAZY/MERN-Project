@@ -55,6 +55,7 @@ export default function AddItemPanel() {
     formik.resetForm();
     setActiveSize(null);
     setActiveType(null);
+    setFile(null);
   };
 
   return (
@@ -76,11 +77,11 @@ export default function AddItemPanel() {
             onSubmit={formik.handleSubmit}
           >
             <div className="img-area w-full md:w-1/2">
-              <div className="flex justify-center mt-10">
+              <div className="flex justify-center mt-14 h-80">
                 <label htmlFor="image">
                   <img
                     src={file || avatar}
-                    className="cursor-pointer rounded-xl"
+                    className="cursor-pointer rounded-xl shadow-md"
                     style={{ width: "100%", height: "100%" }}
                   />
                 </label>
@@ -161,7 +162,9 @@ export default function AddItemPanel() {
                 </button>
               </div>
               <div className="py-10">
-                <button className="w-full h-12 text-lg text-black bg-white border border-gray-400 rounded-xl hover:bg-black hover:text-white">
+                <button className="w-full h-12 text-lg text-black bg-white border border-gray-400 rounded-xl hover:bg-black hover:text-white hover:scale-105 transition-all duration-300"
+                onClick={handleResetForm}
+                >
                   Add Item
                 </button>
               </div>
