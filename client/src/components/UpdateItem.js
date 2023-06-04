@@ -22,9 +22,13 @@ export default function UpdateItemPanel() {
   const [activeSize, setActiveSize] = useState(null);
   const [activeType, setActiveType] = useState(null);
   const [activePublish, setActivePublish] = useState(null);
+  const [active, setActive] = useState(false);
+
   var size = ["100%", "400%", "1000%", "100% + 400%"];
   var type = ["Artist", "License"];
   var publish = ["Newest", "Latest"];
+
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await searchItem({
@@ -80,6 +84,7 @@ export default function UpdateItemPanel() {
   const inputonChange = async (e) => {
     setText(e.target.value)
   };
+  
   //filterBar function
   const handleFilterBar = () => {
     setFilterBar(!filterBar);
@@ -158,7 +163,7 @@ export default function UpdateItemPanel() {
             Filter
           </button>
           <button 
-            className="px-4 border border-gray-400 rounded-xl ml-2"
+            className="h-12 px-4 py-2 border border-gray-400 rounded-xl ml-2"
             onClick={handleRefresh}
           >
             <IoIosRefresh 
@@ -186,7 +191,7 @@ export default function UpdateItemPanel() {
                       <div className="cta flex space-x-2 py-3">
                         <button
                           className={`py-1 w-2/6 md:w-2/6 bg-white border border-gray-400 rounded-xl ${
-                            activeSize === 0
+                            activeSize === "100%"
                               ? "bg-black text-white"
                               : "bg-white"
                           }`}
@@ -197,7 +202,7 @@ export default function UpdateItemPanel() {
                         </button>
                         <button
                           className={`py-1 w-2/6 md:w-2/6 bg-white border border-gray-400 rounded-xl ${
-                            activeSize === 1
+                            activeSize === "400%"
                               ? "bg-black text-white"
                               : "bg-white"
                           }`}
@@ -208,7 +213,7 @@ export default function UpdateItemPanel() {
                         </button>
                         <button
                           className={`py-1 w-2/6 md:w-2/6 bg-white border border-gray-400 rounded-xl ${
-                            activeSize === 2
+                            activeSize === "1000%"
                               ? "bg-black text-white"
                               : "bg-white"
                           }`}
@@ -219,7 +224,7 @@ export default function UpdateItemPanel() {
                         </button>
                         <button
                           className={`py-1 w-3/6 md:w-4/6 bg-white border border-gray-400 rounded-xl ${
-                            activeSize === 3
+                            activeSize === "100% + 400%"
                               ? "bg-black text-white"
                               : "bg-white"
                           }`}
@@ -239,7 +244,7 @@ export default function UpdateItemPanel() {
                       <div className="cta flex space-x-2 py-3">
                         <button
                           className={`px-2 py-1 w-2/6 md:w-2/6 bg-white border border-gray-400 rounded-xl ${
-                            activeType === 4
+                            activeType === "Artist"
                               ? "bg-black text-white"
                               : "bg-white"
                           }`}
@@ -250,7 +255,7 @@ export default function UpdateItemPanel() {
                         </button>
                         <button
                           className={`px-2 py-1 w-2/6 md:w-2/6 bg-white border border-gray-400 rounded-xl ${
-                            activeType === 5
+                            activeType === "License"
                               ? "bg-black text-white"
                               : "bg-white"
                           }`}
@@ -263,7 +268,7 @@ export default function UpdateItemPanel() {
                     </div>
                   </div>
                 </div>
-                <div className="card flex-1 rounded-xl w-full bg-white border border-gray-300 rounded-xl p-5 py-4 relative">
+                {/* <div className="card flex-1 rounded-xl w-full bg-white border border-gray-300 rounded-xl p-5 py-4 relative">
                   <div className="w-full">
                     <div className="text-area ">
                       <p className="text-black font-semibold">Publish</p>
@@ -293,7 +298,7 @@ export default function UpdateItemPanel() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
