@@ -230,13 +230,18 @@ export async function deleteItem(itemId) {
 //search item function
 export async function searchItem(searchItem) {
     try {
-        const {name, size, type, createdAt} = searchItem;
-        console.log("search:",name, size, type, createdAt)
+        const {_id, name, size, type, createdAt} = searchItem;
+        console.log("search:",_id, name, size, type, createdAt)
         // console.log(searchTerm)
         const encodedSearchTerm = encodeURIComponent(name);
         // console.log(encodedSearchTerm)
         let api_sent = `http://localhost:8080/api/getAllCards?`
         let check = false;
+        if (_id){
+          if(check){api_sent = api_sent + '&'}
+          api_sent = api_sent + `_id=${_id}`
+          check = true;
+        }
         if (encodedSearchTerm !== "undefined"){
           if(check){api_sent = api_sent + '&'}
           api_sent = api_sent + `name=${encodedSearchTerm}`
@@ -267,7 +272,7 @@ export async function searchItem(searchItem) {
         const data = await response.json();
         const items = data.map((item) => {
           return {
-            id: item._id,
+            _id: item._id,
             name: item.name,
             size: item.size,
             type: item.type,

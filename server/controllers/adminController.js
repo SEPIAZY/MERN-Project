@@ -21,7 +21,6 @@ export async function addItem(req, res){
 export async function deleteItem(req, res) {
     try {
       const itemId = req.params.id;
-  
       // Find the item by ID and remove it
       const deletedItem = await bearbrick.findByIdAndRemove(itemId);
   
@@ -87,7 +86,7 @@ const handleCardSearchResponse = (promise, res, errorMessage) => {
   .then((cards) => {
     // Map the cards to include only the required fields
     const filteredCards = cards.map(({ _id, name, type, image, size, createdAt }) => ({
-      id: _id,
+      _id,
       name,
       type,
       image,
@@ -105,12 +104,11 @@ const handleCardSearchResponse = (promise, res, errorMessage) => {
 const createFilters = (req) => {
   const filters = {};
 
-  ['name', 'type', 'size', 'createdAt'].forEach((field) => {
+  [ 'name', 'type', 'size', 'createdAt'].forEach((field) => {
     if (req.query[field]) {
       filters[field] = req.query[field].trim();
     }
   });
-
 
   if (req.query.name) {
     // Create a case-insensitive regex to filter by name
@@ -131,8 +129,8 @@ const createFilters = (req) => {
 };
 
 export async function getAllCards(req, res) {
-  console.log(req.query);
-  const limit = parseInt(req.query.limit) || 27;
+  // console.log(req.query);
+  const limit = parseInt(req.query.limit) || 100;
   const offset = parseInt(req.query.offset) || 0;
   const filters = createFilters(req);
   handleCardSearchResponse(

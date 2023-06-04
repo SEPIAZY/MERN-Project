@@ -6,6 +6,7 @@ import convertToBase64 from "../helper/convert";
 import { addItem, searchItem } from "../helper/helper";
 import { getNumberOfItems } from "../helper/helper";
 import { getItemsData } from "../helper/helper";
+import { deleteItem } from "../helper/helper";  
 import Navbar from "../components/Nav";
 import { IoIosSearch } from "react-icons/io";
 import { FaTrash } from "react-icons/fa";
@@ -14,7 +15,6 @@ import { IoIosRefresh } from "react-icons/io";
 
 export default function UpdateItemPanel() {
   const navigate = useNavigate();
-  const [resultsCount, setResultsCount] = useState(0);
   const [items, setItems] = useState([]);
   const [filterBar, setFilterBar] = useState(false);
   const [filterBox, setFilterBox] = useState(false);
@@ -22,64 +22,69 @@ export default function UpdateItemPanel() {
   const [activeSize, setActiveSize] = useState(null);
   const [activeType, setActiveType] = useState(null);
   const [activePublish, setActivePublish] = useState(null);
-  const [active, setActive] = useState(false);
+  const [id, setId] = useState();
 
   var size = ["100%", "400%", "1000%", "100% + 400%"];
   var type = ["Artist", "License"];
   var publish = ["Newest", "Latest"];
 
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const result = await searchItem({
+  //       _id: id,
+  //       name: text,
+  //       size: activeSize,
+  //       type: activeType,
+  //       createdAt: activePublish,
+  //     });
+  //     setItems(result);
+  //   };
+  
+  //   fetchData();
+  // }, []);
+
   useEffect(() => {
     const fetchData = async () => {
+      console.log(id,text, activeSize, activeType, activePublish);
       const result = await searchItem({
+        _id: id,
         name: text,
         size: activeSize,
         type: activeType,
         createdAt: activePublish,
       });
       setItems(result);
-    };
-  
-    fetchData();
-  }, []);
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log(text, activeSize, activeType, activePublish);
-      const result = await searchItem({
-        name: text,
-        size: activeSize,
-        type: activeType,
-        createdAt: activePublish,
-      });
-      setItems(result);
+      console.log(result);
     };
   
     fetchData();
 
-  }, [text, activeSize, activeType, activePublish]);
-  useEffect(() => {
-    //fetch number of items
-    const fetchResultsCount = async () => {
-      const numberOfItems = items.length;
-      setResultsCount(numberOfItems);
-    };
-    fetchResultsCount();
-  }, [items]);
+  }, [id, text, activeSize, activeType, activePublish]);
 
-  useEffect(() => {
-    //fetch items data
-    const fetchItemsData = async () => {
-      try {
-        const itemsData = await getItemsData();
-        setItems(itemsData);
-      } catch (error) {
-        console.error("Error fetching items:", error);
-        setItems([]);
-      }
-    };
+  // useEffect(() => {
+  //   //fetch number of items
+  //   const fetchResultsCount = async () => {
+  //     const numberOfItems = items.length;
+  //     setResultsCount(numberOfItems);
+  //   };
+  //   fetchResultsCount();
+  // }, [items]);
 
-    fetchItemsData();
-  }, []);
+  // useEffect(() => {
+  //   //fetch items data
+  //   const fetchItemsData = async () => {
+  //     try {
+  //       const itemsData = await getItemsData();
+  //       setItems(itemsData);
+  //     } catch (error) {
+  //       console.error("Error fetching items:", error);
+  //       setItems([]);
+  //     }
+  //   };
+
+  //   fetchItemsData();
+  // }, []);
 
   const inputonChange = async (e) => {
     setText(e.target.value)
@@ -91,7 +96,7 @@ export default function UpdateItemPanel() {
     setFilterBox(!filterBox);
   };
 
-  const handleComfirm = () => {
+  const handleComfirm = async (itemId) => {
     Swal.fire({
       title: "Delete this item?",
       text: "This item will be deleted permanently!",
@@ -100,9 +105,18 @@ export default function UpdateItemPanel() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        Swal.fire("Deleted!", "Item has been deleted.", "success");
+        try {
+          console.log(itemId);
+          await deleteItem(itemId);
+          Swal.fire("Deleted!", "Item has been deleted.", "success");
+          // Update the items state to remove the deleted item
+          setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+        } catch (error) {
+          console.error("Error deleting item:", error);
+          Swal.fire("Error", "Failed to delete item.", "error");
+        }
       }
     });
   };
@@ -115,6 +129,7 @@ export default function UpdateItemPanel() {
 
   const formik = useFormik({
     initialValues: {
+      _id: "",
       name: "",
       type: "",
       size: "",
@@ -175,7 +190,7 @@ export default function UpdateItemPanel() {
 
       <div className="flex flex-col items-start">
         <span className="px-8 md:px-32 text-gray-500">
-          {resultsCount} result found
+          {items.length} result found
         </span>
         <hr className="mt-2 border-gray-300 w-full" />
       </div>
@@ -313,13 +328,13 @@ export default function UpdateItemPanel() {
             <div className="card-container flex flex-wrap gap-4 mb-4 justify-center">
                 {items.map((item) => (
                   <div
-                    key={item.id}
+                    key={item._id}
                     className="card rounded-xl w-4/5 md:w-1/4 bg-white drop-shadow-lg rounded-xl p-5 py-4 relative cursor-pointer hover:scale-105 transition-all duration-300"
                   >
                     <FaTrash
                       className="ml-auto mr-auto absolute top-7 right-9 text-2xl text-gray-400 cursor-pointer hover:text-black"
                       onClick={() => {
-                        handleComfirm();
+                        handleComfirm(item._id);
                       }}
                     />
   
