@@ -131,25 +131,38 @@ const createFilters = (req) => {
 };
 
 export async function getAllCards(req, res) {
-  if (req.query.id) {
-    const cardIds = req.query.id.split(',').map(id => id.trim());
-    handleCardSearchResponse(
-      bearbrick.find({ _id: { $in: cardIds } }),
-      res,
-      "An error occurred while fetching the cards."
-    );
-  } else {
-    const limit = parseInt(req.query.limit) || 27;
-    const offset = parseInt(req.query.offset) || 0;
-    const filters = createFilters(req);
-    console.log(filters);
-    handleCardSearchResponse(
-      bearbrick.find(filters)
-        .skip(offset)
-        .sort({ createdAt: -1 })
-        .limit(limit),
-      res,
-      "An error occurred while fetching matching items."
-    );
-  } 
+  console.log(req.query);
+  const limit = parseInt(req.query.limit) || 27;
+  const offset = parseInt(req.query.offset) || 0;
+  const filters = createFilters(req);
+  handleCardSearchResponse(
+        bearbrick.find(filters)
+          .skip(offset)
+          .sort({ createdAt: -1 })
+          .limit(limit),
+        res,
+        "An error occurred while fetching matching items."
+      );
+
+  // if (req.query.id) {
+  //   const cardIds = req.query.id.split(',').map(id => id.trim());
+  //   handleCardSearchResponse(
+  //     bearbrick.find({ _id: { $in: cardIds } }),
+  //     res,
+  //     "An error occurred while fetching the cards."
+  //   );
+  // } else {
+  //   const limit = parseInt(req.query.limit) || 27;
+  //   const offset = parseInt(req.query.offset) || 0;
+  //   const filters = createFilters(req);
+  //   console.log(filters);
+  //   handleCardSearchResponse(
+  //     bearbrick.find(filters)
+  //       .skip(offset)
+  //       .sort({ createdAt: -1 })
+  //       .limit(limit),
+  //     res,
+  //     "An error occurred while fetching matching items."
+  //   );
+  // } 
 };

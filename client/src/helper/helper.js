@@ -228,15 +228,42 @@ export async function deleteItem(itemId) {
 }
 
 //search item function
-export async function searchItem(searchTerm) {
+export async function searchItem(searchItem) {
     try {
+        const {name, size, type, createdAt} = searchItem;
+        console.log("search:",name, size, type, createdAt)
         // console.log(searchTerm)
-        const encodedSearchTerm = encodeURIComponent(searchTerm);
+        const encodedSearchTerm = encodeURIComponent(name);
         // console.log(encodedSearchTerm)
-        const response = await fetch(`http://localhost:8080/api/getAllCards?name=${encodedSearchTerm}`);
+        let api_sent = `http://localhost:8080/api/getAllCards?`
+        let check = false;
+        if (encodedSearchTerm !== "undefined"){
+          if(check){api_sent = api_sent + '&'}
+          api_sent = api_sent + `name=${encodedSearchTerm}`
+          check = true;
+        }
+        if (size){
+          if(check){api_sent = api_sent + '&'}
+          api_sent = api_sent + `size=${size}`
+          check = true;
+        }
+        if (type){
+          if(check){api_sent = api_sent + '&'}
+          api_sent = api_sent + `type=${type}`
+          check = true;
+        }
+        if (createdAt){
+          if(check){api_sent = api_sent + '&'}
+          api_sent = api_sent + `createdAt=${createdAt}`
+          check = true;
+        }
+        console.log("api_sent",api_sent)
+        const response = await fetch(api_sent);
+        
         if (!response.ok) {
           throw new Error("Request failed");
         }
+        
         const data = await response.json();
         const items = data.map((item) => {
           return {
@@ -248,7 +275,6 @@ export async function searchItem(searchTerm) {
             createdAt: item.createdAt,
           };
         });
-    
         return items;
       } catch (error) {
         console.error("Error fetching items:", error);
