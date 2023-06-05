@@ -14,6 +14,7 @@ import LandingPage from './pages/Landingpage';
 import Social from './pages/Social';
 import AddItem from './components/AddItem';
 import UpdateItem from './components/UpdateItem';
+import Collection from './pages/Collection';
 
 
 /** auth middleware */
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
     {
         path : '/updateitem',
         element : <UpdateItem></UpdateItem>
+    },
+    {
+        path : '/collection',
+        element : <Collection></Collection>
     }
 ])
 

@@ -22,4 +22,4 @@ export const Bearbrick = new mongoose.Schema({
 {timestamps: true}
 );
 
-export default mongoose.model.Admins || mongoose.model('Bearbrick', Bearbrick);
+export default mongoose.model('Bearbrick', Bearbrick);

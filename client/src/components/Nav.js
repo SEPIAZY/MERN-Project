@@ -70,8 +70,17 @@ export default function Navbar() {
             >
               Home
             </button>
-            <button className="text-lg hover:scale-105 transition-all duration-300">
-              Profile
+            <button
+              className="text-lg hover:scale-105 transition-all duration-300"
+              onClick={() => navigate("/social")}
+            >
+              Social
+            </button>
+            <button 
+              className="text-lg hover:scale-105 transition-all duration-300"
+              onClick={() => navigate("/collection")}
+            >
+              Collection
             </button>
             <button className="text-lg hover:scale-105 transition-all duration-300">
               QR Code

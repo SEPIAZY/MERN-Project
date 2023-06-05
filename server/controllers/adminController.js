@@ -129,7 +129,7 @@ const createFilters = (req) => {
 };
 
 export async function getAllCards(req, res) {
-  // console.log(req.query);
+  
   const limit = parseInt(req.query.limit) || 100;
   const offset = parseInt(req.query.offset) || 0;
   const filters = createFilters(req);
@@ -142,25 +142,21 @@ export async function getAllCards(req, res) {
         "An error occurred while fetching matching items."
       );
 
-  // if (req.query.id) {
-  //   const cardIds = req.query.id.split(',').map(id => id.trim());
-  //   handleCardSearchResponse(
-  //     bearbrick.find({ _id: { $in: cardIds } }),
-  //     res,
-  //     "An error occurred while fetching the cards."
-  //   );
-  // } else {
-  //   const limit = parseInt(req.query.limit) || 27;
-  //   const offset = parseInt(req.query.offset) || 0;
-  //   const filters = createFilters(req);
-  //   console.log(filters);
-  //   handleCardSearchResponse(
-  //     bearbrick.find(filters)
-  //       .skip(offset)
-  //       .sort({ createdAt: -1 })
-  //       .limit(limit),
-  //     res,
-  //     "An error occurred while fetching matching items."
-  //   );
-  // } 
+  // const limit = parseInt(req.query.limit) || 100;
+  // const offset = parseInt(req.query.offset) || 0;
+  // const filters = createFilters(req);
+
+  // try {
+  //   const cards = await bearbrick.find(filters)
+  //     .select('_id name type image size createdAt')
+  //     .sort({ createdAt: -1 })
+  //     .skip(offset)
+  //     .slice(offset, offset + limit)
+  //     .lean();
+
+  //   res.json(cards);
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).json({ error: 'An error occurred while fetching matching items.' });
+  // }
 };

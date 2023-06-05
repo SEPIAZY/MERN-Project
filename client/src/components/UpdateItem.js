@@ -3,15 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import toast, { Toaster } from "react-hot-toast";
 import convertToBase64 from "../helper/convert";
-import { addItem, searchItem } from "../helper/helper";
-import { getNumberOfItems } from "../helper/helper";
-import { getItemsData } from "../helper/helper";
-import { deleteItem } from "../helper/helper";  
+import { searchItem, updateCards } from "../helper/helper";
+import { deleteItem } from "../helper/helper";
+import { updateItem } from "../helper/helper";
 import Navbar from "../components/Nav";
 import { IoIosSearch } from "react-icons/io";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { IoIosRefresh } from "react-icons/io";
+import { FiEdit } from "react-icons/fi";
+import avatar from "../assets/profile.jpg";
+import { IoIosCloseCircle } from "react-icons/io";
 
 export default function UpdateItemPanel() {
   const navigate = useNavigate();
@@ -23,30 +25,46 @@ export default function UpdateItemPanel() {
   const [activeType, setActiveType] = useState(null);
   const [activePublish, setActivePublish] = useState(null);
   const [id, setId] = useState();
+  const [refresh, setRefresh] = useState(false);
+  const [file, setFile] = useState();
+  const [showUpdateBox, setShowUpdateBox] = useState(false);
 
   var size = ["100%", "400%", "1000%", "100% + 400%"];
   var type = ["Artist", "License"];
-  var publish = ["Newest", "Latest"];
 
+  const onUpload = async (e) => {
+    try {
+      const base64 = await convertToBase64(e.target.files[0]);
+      setFile(base64);
+    } catch (error) {
+      console.error("File upload error:", error);
+    }
+  };
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const result = await searchItem({
-  //       _id: id,
-  //       name: text,
-  //       size: activeSize,
-  //       type: activeType,
-  //       createdAt: activePublish,
-  //     });
-  //     setItems(result);
-  //   };
-  
-  //   fetchData();
-  // }, []);
+  const [nameUpdate, setNameUpdate] = useState();
+  const [sizeUpdate, setSizeUpdate] = useState();
+  const [typeUpdate, setTypeUpdate] = useState();
+  const [fileUpdate, setFileUpdate] = useState();
+  const [idUpdate, setIdUpdate] = useState();
+
+  const handleEditClick = (item) => {
+    setIdUpdate(item._id);
+    setNameUpdate(item.name);
+    setSizeUpdate(item.size);
+    setTypeUpdate(item.type);
+    console.log("oldim", item.image);
+    console.log("newim", file);
+    setFileUpdate(item.image);
+    setShowUpdateBox(!showUpdateBox);
+  };
+
+  const handleCloseEdit = () => {
+    setShowUpdateBox(!showUpdateBox);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(id,text, activeSize, activeType, activePublish);
+      // console.log(id, text, activeSize, activeType, activePublish);
       const result = await searchItem({
         _id: id,
         name: text,
@@ -55,42 +73,16 @@ export default function UpdateItemPanel() {
         createdAt: activePublish,
       });
       setItems(result);
-      console.log(result);
+      // console.log(result);
     };
-  
+
     fetchData();
-
-  }, [id, text, activeSize, activeType, activePublish]);
-
-  // useEffect(() => {
-  //   //fetch number of items
-  //   const fetchResultsCount = async () => {
-  //     const numberOfItems = items.length;
-  //     setResultsCount(numberOfItems);
-  //   };
-  //   fetchResultsCount();
-  // }, [items]);
-
-  // useEffect(() => {
-  //   //fetch items data
-  //   const fetchItemsData = async () => {
-  //     try {
-  //       const itemsData = await getItemsData();
-  //       setItems(itemsData);
-  //     } catch (error) {
-  //       console.error("Error fetching items:", error);
-  //       setItems([]);
-  //     }
-  //   };
-
-  //   fetchItemsData();
-  // }, []);
+  }, [id, text, activeSize, activeType, activePublish, refresh]);
 
   const inputonChange = async (e) => {
-    setText(e.target.value)
+    setText(e.target.value);
   };
-  
-  //filterBar function
+
   const handleFilterBar = () => {
     setFilterBar(!filterBar);
     setFilterBox(!filterBox);
@@ -112,7 +104,10 @@ export default function UpdateItemPanel() {
           await deleteItem(itemId);
           Swal.fire("Deleted!", "Item has been deleted.", "success");
           // Update the items state to remove the deleted item
-          setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+          setItems((prevItems) =>
+            prevItems.filter((item) => item.id !== itemId)
+          );
+          setRefresh(!refresh);
         } catch (error) {
           console.error("Error deleting item:", error);
           Swal.fire("Error", "Failed to delete item.", "error");
@@ -140,18 +135,20 @@ export default function UpdateItemPanel() {
   const handleSizeClick = (buttonIndex, value) => {
     setActiveSize(size[buttonIndex]);
     formik.setFieldValue("size", value);
-    // console.log(formik.values);
   };
   const handleTypeClick = (buttonIndex, value) => {
     setActiveType(type[buttonIndex]);
     formik.setFieldValue("type", value);
-    // console.log(formik.values);
   };
-  const handlePublishClick = (buttonIndex, value) => {
-    setActivePublish(publish[buttonIndex]);
-    formik.setFieldValue("publish", value);
-    // console.log(formik.values);
-  };
+
+  const updateCard = async (id) => {
+    updateCards(id,{
+      name: nameUpdate,
+      type: typeUpdate,
+      size: sizeUpdate,
+      image: file,
+    })
+  }
 
   return (
     <div className="bg-white">
@@ -168,7 +165,7 @@ export default function UpdateItemPanel() {
           <input
             type="text"
             placeholder="   Search"
-            className="w-3/5 h-12 pl-10 pr-32 rounded-xl border border-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+            className="w-3/5 h-12 pl-12 pr-32 rounded-xl border border-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
             onChange={(e) => inputonChange(e)}
           />
           <button
@@ -177,13 +174,11 @@ export default function UpdateItemPanel() {
           >
             Filter
           </button>
-          <button 
+          <button
             className="h-12 px-4 py-2 border border-gray-400 rounded-xl ml-2"
             onClick={handleRefresh}
           >
-            <IoIosRefresh 
-            className="text-xl text-black cursor-pointer" 
-            />
+            <IoIosRefresh className="text-xl text-black cursor-pointer" />
           </button>
         </div>
       </div>
@@ -194,6 +189,7 @@ export default function UpdateItemPanel() {
         </span>
         <hr className="mt-2 border-gray-300 w-full" />
       </div>
+
       {filterBar && (
         <div>
           <div className="container mx-auto">
@@ -322,50 +318,148 @@ export default function UpdateItemPanel() {
         </div>
       )}
 
+      {showUpdateBox && (
+        <div className="updatebox">
+          <div className="container mx-auto py-4">
+            <div className="">
+              <form className="flex flex-col md:flex-row md:justify-between gap-5">
+                <div className="img-area w-full md:w-1/2">
+                  <button className="mt-2 ml-6 text-xl text-black font-base cursor-pointer hover:underline" 
+                  onClick={handleCloseEdit}
+                  >
+                    Cancel
+                  </button>
+                  <div className="flex justify-center mt-4 h-80 md:h-80">
+                    <label htmlFor="image">
+                      <img
+                        src={file || fileUpdate}
+
+                        className="w-3/4 h-2/4 ml-auto mr-auto md:w-full md:h-full cursor-pointer rounded-xl shadow-md"
+                      />
+                    </label>
+                  </div>
+                  <input
+                    onChange={onUpload}
+                    type="file"
+                    id="image"
+                    name="image"
+                  />
+                </div>
+                <div className="mt-6 text-area w-full md:w-1/2">
+                  <div className="text-lg font-semibold tracking-wider">
+                    Name
+                  </div>
+                  <div className="py-2">
+                    <input
+                      value={nameUpdate}
+                      onChange={(e) => setNameUpdate(e.target.value)}
+                      className="ml-2 h-12 text-lg px-5 bg-white border border-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+                      type="text"
+                      placeholder="Name"
+                      style={{ width: "100%" }}
+                    />
+                  </div>
+                  <div className="mt-2 text-lg font-semibold tracking-wider">
+                    Size
+                  </div>
+                  <div className="py-2">
+                  <select
+                    onChange={(e) => setSizeUpdate(e.target.value)}
+                    className="ml-2 h-12 text-lg px-5 rounded-xl bg-white border border-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+                    style={{ width: "100%" }}
+                  >
+                    <option value="" >{sizeUpdate}</option>
+                    <option value="" disabled>Select new size</option>
+                    <option value="100%">100%</option>
+                    <option value="400%">400%</option>
+                    <option value="1000%">1000%</option>
+                    <option value="100% + 400%">100% + 400%</option>
+                  </select>
+
+                  </div>
+                  <div className="mt-2 text-lg font-semibold tracking-wider">
+                    Type
+                  </div>
+                  <div className="py-2">
+                    <select
+                      onChange={(e) => setTypeUpdate(e.target.value)}
+                      className="ml-2 h-12 text-lg px-5 bg-white border border-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+                      style={{ width: "100%" }}
+                    >
+                      <option value="" >{typeUpdate}</option>
+                      <option value="" disabled>Select new type</option>
+                      <option value="Artist">Artist</option>
+                      <option value="License">License</option>
+                    </select>
+                  </div>
+                  <div className="py-6">
+                    <button className="w-full h-12 text-lg text-black bg-white border border-gray-400 rounded-xl hover:bg-black hover:text-white hover:scale-105 transition-all duration-300"
+                    onClick={() => updateCard(idUpdate)}
+                    >
+                      Update Item
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <hr className="border-gray-300 w-full" />
+        </div>
+      )}
+
       <div className="container mx-auto">
         <div className="bear database">
           <div className="px-6 py-6 flex overflow-x-auto">
             <div className="card-container flex flex-wrap gap-4 mb-4 justify-center">
-                {items.map((item) => (
-                  <div
-                    key={item._id}
-                    className="card rounded-xl w-4/5 md:w-1/4 bg-white drop-shadow-lg rounded-xl p-5 py-4 relative cursor-pointer hover:scale-105 transition-all duration-300"
-                  >
-                    <FaTrash
-                      className="ml-auto mr-auto absolute top-7 right-9 text-2xl text-gray-400 cursor-pointer hover:text-black"
-                      onClick={() => {
-                        handleComfirm(item._id);
-                      }}
-                    />
-  
-                    <div className="w-full md:w-6/6">
-                      <div className="img-area h-32 ml-2 md:h-56 md:ml-4 flex justify-center">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className="rounded-lg w-4/6 h-full md:w-full md:h-full"
-                        />
-                      </div>
-                    </div>
-                    <div className="text-area mt-2 md:mt-6">
-                      <p className="text-black font-semibold">{item.name}</p>
-                    </div>
-                    <div className="cta flex space-x-3 py-3">
-                      <button
-                        className="py-1 w-3/6 md:w-4/6 bg-white border border-gray-400 rounded-xl"
-                        type="button"
-                      >
-                        {item.size}
-                      </button>
-                      <button
-                        className="py-1 w-3/6 md:w-4/6 bg-white border border-gray-400 rounded-xl"
-                        type="button"
-                      >
-                        {item.type}
-                      </button>
+              {items.map((item) => (
+                <div
+                  key={item._id}
+                  className="card rounded-xl w-4/5 md:w-1/4 bg-white drop-shadow-lg rounded-xl p-5 py-4 relative cursor-pointer hover:scale-105 transition-all duration-300"
+                >
+                  <FaTrash
+                    className="ml-auto mr-auto absolute top-7 right-9 text-2xl text-gray-400 cursor-pointer hover:text-black"
+                    onClick={() => {
+                      handleComfirm(item._id);
+                    }}
+                  />
+
+                  <div className="w-full md:w-6/6">
+                    <div className="img-area h-32 ml-2 md:h-56 md:ml-4 flex justify-center">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="rounded-lg w-4/6 h-full md:w-full md:h-full"
+                      />
                     </div>
                   </div>
-                ))}
+                  <div className="text-area mt-2 md:mt-6">
+                    <p className="text-black font-semibold">{item.name}</p>
+                  </div>
+                  <div className="cta flex space-x-2 py-3">
+                    <button
+                      className="py-1 w-3/6 md:w-3/6 bg-white border border-gray-400 rounded-xl"
+                      type="button"
+                    >
+                      {item.size}
+                    </button>
+                    <button
+                      className="py-1 w-2/6 md:w-2/6 bg-white border border-gray-400 rounded-xl"
+                      type="button"
+                    >
+                      {item.type}
+                    </button>
+                    <button
+                      className="py-1 w-1/6 md:w-1/6 bg-white border border-gray-400 rounded-xl"
+                      type="button"
+                      onClick={() => {
+                        handleEditClick(item);
+                      }}
+                    >
+                      <FiEdit className="ml-auto mr-auto" />
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

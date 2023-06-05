@@ -231,7 +231,7 @@ export async function deleteItem(itemId) {
 export async function searchItem(searchItem) {
     try {
         const {_id, name, size, type, createdAt} = searchItem;
-        console.log("search:",_id, name, size, type, createdAt)
+        // console.log("search:",_id, name, size, type, createdAt)
         // console.log(searchTerm)
         const encodedSearchTerm = encodeURIComponent(name);
         // console.log(encodedSearchTerm)
@@ -262,7 +262,7 @@ export async function searchItem(searchItem) {
           api_sent = api_sent + `createdAt=${createdAt}`
           check = true;
         }
-        console.log("api_sent",api_sent)
+        // console.log("api_sent",api_sent)
         const response = await fetch(api_sent);
         
         if (!response.ok) {
@@ -285,4 +285,16 @@ export async function searchItem(searchItem) {
         console.error("Error fetching items:", error);
         return []; // Return an empty array or handle the error as per your requirement
       }
+}
+
+//update item fuction
+export async function updateCards(id,item) {
+  try {
+    const { data } = await axios.put(
+      `http://localhost:8080/api/updateitem/${id}`,item
+    );
+    return Promise.resolve({ data });
+  } catch (error) {
+    return Promise.reject({ error });
+  }
 }
