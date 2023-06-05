@@ -6,6 +6,7 @@ import * as controller from '../controllers/appController.js';
 import { registerMail } from '../controllers/mailer.js'
 import Auth, { localVariables } from '../middleware/auth.js';
 import * as admincontroller from '../controllers/adminController.js';
+import * as usercontroller from '../controllers/userController.js';
 
 
 
@@ -29,6 +30,7 @@ router.route('/getallcards').get(admincontroller.getAllCards); // search item fr
 router.route('/updateuser').put(Auth, controller.updateUser); // is use to update the user profile
 router.route('/resetPassword').put(controller.verifyUser, controller.resetPassword); // use to reset password
 router.route('/updateitem/:id').put(admincontroller.updateItem); // update item in the database
+router.route('/updatecollection/:userid').put(usercontroller.updateCollection); // update item in the database
 
 /** DELETE Methods */
 router.route('/deleteitem/:id').delete(admincontroller.deleteItem); // delete item from the database

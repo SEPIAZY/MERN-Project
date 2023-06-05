@@ -36,7 +36,7 @@ export default function Password() {
         localStorage.setItem('token', token);
         localStorage.setItem('data', JSON.stringify(res.data));
         console.log(res.data);
-        navigate('/profile')
+        navigate('/landingpage')
       })
     }
   })

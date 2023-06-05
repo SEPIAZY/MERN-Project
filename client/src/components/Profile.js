@@ -36,7 +36,7 @@ export default function Profile() {
         success : <b>Update Successfully...!</b>,
         error: <b>Could not Update!</b>
       });
-      navigate('/landingpage')
+      navigate('/collection')
     }
   })
 
@@ -88,9 +88,9 @@ export default function Profile() {
                   
               </div>
 
-              <div className="text-center py-4">
+              {/* <div className="text-center py-4">
                 <span className='text-gray-400'>come back later? <button onClick={userLogout} className='text-black' to="/">Log out</button></span>
-              </div>
+              </div> */}
 
           </form>
 

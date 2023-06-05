@@ -7,6 +7,7 @@ import { passwordValidate } from "../helper/validate";
 import useFetch from "../hooks/fetch.hook";
 import { useAuthStore } from "../store/store";
 import { verifyPassword } from "../helper/helper";
+import { updateUserCollection } from "../helper/helper";
 import Navbar from "../components/Nav";
 import { searchItem } from "../helper/helper";
 import { IoIosSearch, IoIosRefresh } from "react-icons/io";
@@ -23,6 +24,7 @@ export default function SocialUser() {
   const [items, setItems] = useState([]);
   const [id, setId] = useState();
   const [refresh, setRefresh] = useState(false);
+  const [{ isLoading, apiData, serverError }] = useFetch();
 
   const inputonChange = async (e) => {
     setText(e.target.value);
@@ -55,7 +57,7 @@ export default function SocialUser() {
   };
   const formik = useFormik({
     initialValues: {
-      _id: "",
+      _id: apiData?._id || "",
       name: "",
       type: "",
       size: "",
@@ -80,17 +82,33 @@ export default function SocialUser() {
     fetchData();
   }, [id, text, activeSize, activeType, activePublish, refresh]);
 
+  const [likedItems, setLikedItems] = useState([]);
+
   const handleLike = (itemId) => {
     setItems((prevItems) => {
       return prevItems.map((item) => {
         if (item._id === itemId) {
-          return { ...item, liked: !item.liked };
+          const updatedItem = { ...item, liked: !item.liked };
+          if (updatedItem.liked) {
+            setLikedItems((prevLikedItems) => [...prevLikedItems, itemId]);
+          } else {
+            setLikedItems((prevLikedItems) =>
+              prevLikedItems.filter((id) => id !== itemId)
+            );
+          }
+          return updatedItem;
         }
         return item;
       });
     });
   };
 
+  const userid = apiData?._id;
+  
+  // console.log("userid:", userid, "likedItems:", likedItems);
+    
+  updateUserCollection(userid, likedItems);
+  
   return (
     <div className="bg-white">
       <Navbar />
@@ -269,27 +287,26 @@ export default function SocialUser() {
           <div className="px-6 py-6 flex overflow-x-auto">
             <div className="card-container flex flex-wrap gap-4 mb-4 justify-center">
               {items.map((item) => (
-                
                 <div
                   key={item._id}
                   className="card rounded-xl w-4/5 md:w-1/4 bg-white drop-shadow-lg rounded-xl p-5 py-4 relative cursor-pointer hover:scale-105 transition-all duration-300"
                 >
                   <button
-                  onClick={() => handleLike(item._id)}
-                  className="absolute top-5 right-7 w-12 h-12 rounded-full bg-white border border-gray-300 flex justify-center items-center"
-                >
-                  {item.liked ? (
-                    <AiFillHeart
-                      className="w-5 h-5 text-red-500"
-                      strokeWidth={0.1}
-                    />
-                  ) : (
-                    <AiOutlineHeart
-                      className="w-5 h-5 text-gray-500"
-                      strokeWidth={0.1}
-                    />
-                  )}
-                </button>
+                    onClick={() => handleLike(item._id)}
+                    className="absolute top-5 right-7 w-12 h-12 rounded-full bg-white border border-gray-300 flex justify-center items-center"
+                  >
+                    {item.liked ? (
+                      <AiFillHeart
+                        className="w-5 h-5 text-red-500"
+                        strokeWidth={0.1}
+                      />
+                    ) : (
+                      <AiOutlineHeart
+                        className="w-5 h-5 text-gray-500"
+                        strokeWidth={0.1}
+                      />
+                    )}
+                  </button>
                   <div className="w-full md:w-6/6">
                     <div className="img-area h-32 ml-2 md:h-56 md:ml-4 flex justify-center">
                       <img
