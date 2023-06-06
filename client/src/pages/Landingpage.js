@@ -73,7 +73,9 @@ export default function LandingPage() {
               <span className="text-gray-350 text-lg w-2/3 text-left px-16 py-4">
                 Let's create you bearbrick collection
               </span>
-              <button className={styles.btn} type="button">
+              <button className={styles.btn} type="button"
+              onClick={() => navigate("/social")}
+              >
                 Create
               </button>
             </div>

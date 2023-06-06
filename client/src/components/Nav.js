@@ -76,14 +76,17 @@ export default function Navbar() {
             >
               Social
             </button>
+            <button
+              className="text-lg hover:scale-105 transition-all duration-300"
+              onClick={() => navigate("/friend")}
+            >
+              Friend
+            </button>
             <button 
               className="text-lg hover:scale-105 transition-all duration-300"
               onClick={() => navigate("/collection")}
             >
-              Collection
-            </button>
-            <button className="text-lg hover:scale-105 transition-all duration-300">
-              QR Code
+              Profile
             </button>
             {role === "admin" && (
               <div className="relative inline-block text-left">

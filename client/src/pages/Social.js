@@ -75,6 +75,7 @@ export default function SocialUser() {
         type: activeType,
         createdAt: activePublish,
       });
+
       setItems(result);
       // console.log(result);
     };
@@ -85,40 +86,56 @@ export default function SocialUser() {
   const [likedItems, setLikedItems] = useState([]);
 
   const handleLike = (itemId) => {
-    setItems((prevItems) => {
-      return prevItems.map((item) => {
-        if (item._id === itemId) {
-          const updatedItem = { ...item, liked: !item.liked };
-          if (updatedItem.liked) {
-            setLikedItems((prevLikedItems) => [...prevLikedItems, itemId]);
-          } else {
-            setLikedItems((prevLikedItems) =>
-              prevLikedItems.filter((id) => id !== itemId)
-            );
+    const userid = apiData?._id;
+    if (userid) {
+      // console.log("userid:", userid, "likedItems:", likedItems);
+
+      setItems((prevItems) => {
+        return prevItems.map((item) => {
+          if (item._id === itemId) {
+            const updatedItem = { ...item, liked: !item.liked };
+            if (updatedItem.liked) {
+              setLikedItems((prevLikedItems) => [...prevLikedItems, itemId]);
+            } else {
+              setLikedItems((prevLikedItems) =>
+                prevLikedItems.filter((id) => id !== itemId)
+              );
+            }
+            updateUserCollection(userid, [...likedItems, itemId]);
+            return updatedItem;
           }
-          return updatedItem;
-        }
-        return item;
+          return item;
+        });
       });
-    });
+    }
   };
 
-  const userid = apiData?._id;
-  
-  // console.log("userid:", userid, "likedItems:", likedItems);
-    
-  updateUserCollection(userid, likedItems);
-  
+  const isItemInCollection = (itemId) => {
+    const userid = apiData?._id;
+    if (userid) {
+      return likedItems.includes(itemId);
+    }
+    return false;
+  };
+
+  const handleOfTheColorOfHeart = (itemId) => {
+    if (isItemInCollection(itemId)) {
+      return "red";
+    } else {
+      return "gray";
+    }
+  };
+
   return (
     <div className="bg-white">
       <Navbar />
       <div className="mt-14 flex flex-col items-center justify-center ">
         <h1 className="text-2xl text-black font-bold">BE@RBRICK's World</h1>
         <p className="mt-2 ml-5 text-normal text-gray-500">
-          Let's collect your favortite BE@RBRICK and see other's collection!
+          Let's collect your favortite BE@RBRICK!
         </p>
 
-        <div className="flex items-center">
+        <div className="flex items-center md:w-4/6">
           <div className="container mx-auto py-4 md:py-6">
             <div className="flex flex-row">
               <IoIosSearch className="relative top-2 left-8 md:top-2 md:left-10 text-xl md:text-3xl text-gray-500" />
@@ -146,7 +163,7 @@ export default function SocialUser() {
       </div>
 
       <div className="flex flex-col items-start">
-        <span className="px-8 md:px-32 text-gray-500">
+        <span className="px-8 md:ml-60 text-gray-500">
           {items.length} result found
         </span>
         <hr className="mt-1 border-gray-300 w-full" />
@@ -293,9 +310,10 @@ export default function SocialUser() {
                 >
                   <button
                     onClick={() => handleLike(item._id)}
-                    className="absolute top-5 right-7 w-12 h-12 rounded-full bg-white border border-gray-300 flex justify-center items-center"
+                    className={`absolute top-5 right-7 w-12 h-12 rounded-full bg-white border border-gray-300 flex justify-center items-center
+                    ${handleOfTheColorOfHeart(item._id)}`}
                   >
-                    {item.liked ? (
+                    {isItemInCollection(item._id) ? (
                       <AiFillHeart
                         className="w-5 h-5 text-red-500"
                         strokeWidth={0.1}

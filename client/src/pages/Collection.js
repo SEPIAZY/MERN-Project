@@ -34,6 +34,7 @@ export default function MyCollection() {
 
   const [likedItems, setLikedItems] = useState([]);
   const [items, setItems] = useState([]);
+  
   const handleLike = (itemId) => {
     setItems((prevItems) => {
       return prevItems.map((item) => {

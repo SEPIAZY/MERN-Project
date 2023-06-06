@@ -15,6 +15,7 @@ import Social from './pages/Social';
 import AddItem from './components/AddItem';
 import UpdateItem from './components/UpdateItem';
 import Collection from './pages/Collection';
+import Friend from './pages/Friend';
 
 
 /** auth middleware */
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
     {
         path : '/collection',
         element : <Collection></Collection>
+    },
+    {
+        path : '/friend',
+        element : <Friend></Friend>
     }
 ])
 

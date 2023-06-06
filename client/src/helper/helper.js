@@ -303,7 +303,7 @@ export async function updateCards(id,item) {
 export async function updateUserCollection(userid,likeditemid) {
   try {
     // console.log("userid",userid,"likeditemid",likeditemid)
-    // console.log("url",`http://localhost:8080/api/updatecollection/${userid}`,{ likeditemid })
+    
     const { data } = await axios.put(
       `http://localhost:8080/api/updatecollection/${userid}`,{ likeditemid }
     );
