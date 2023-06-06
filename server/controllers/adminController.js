@@ -241,3 +241,50 @@ export async function deleteUserAc(req, res) {
     return res.status(500).json({ error: error.message });
   }
 }
+
+/** GET: http://localhost:8080/api/findUserAc*/
+
+// export async function findUserAc(req, res) {
+//   const username = req.query.username;
+//   let filters = {};
+
+//   if (username) {
+//     filters.username = { $regex: new RegExp(username, 'i') };
+//   }
+
+//   try {
+//     let users;
+//     if (username) {
+//       users = await UserModel.find(filters);
+//     } else {
+//       users = await UserModel.find();
+//     }
+
+//     res.json(users);
+//   } catch (error) {
+//     res.status(500).json({ error: 'An error occurred while fetching users' });
+//   }
+// }
+export async function findUserAc(req, res) {
+  const { username, text, profile } = req.query;
+  let filters = {};
+
+  if (username) {
+    filters.username = { $regex: new RegExp(username, 'i') };
+  }
+
+  try {
+    let users;
+    if (Object.keys(filters).length > 0) {
+      users = await UserModel.find(filters);
+    } else {
+      users = await UserModel.find();
+    }
+
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while fetching users' });
+  }
+}
+
+

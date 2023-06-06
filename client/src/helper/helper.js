@@ -442,3 +442,39 @@ export async function deleteUserAc(itemId) {
     return { error: error.message };
   }
 }
+
+//find user account function
+export async function findUserAc({ text = '' }) {
+  try {
+    console.log("findUserAc",text);
+    const encodedSearchTerm = encodeURIComponent(text);
+    
+    let response;
+
+    if (encodedSearchTerm) {
+      response = await fetch(`http://localhost:8080/api/findUserAc?username=${encodedSearchTerm}`);
+    } else {
+      response = await fetch(`http://localhost:8080/api/findUserAc`);
+    }
+    
+
+    if (!response.ok) {
+      throw new Error("Request failed");
+    }
+
+    const data = await response.json();
+    const items = data.map((item) => {
+      return {
+        _id: item._id,
+        username: item.username,
+        profile: item.profile,
+        role: item.role,
+      };
+    });
+    return items;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return []; // Return an empty array or handle the error as per your requirement
+  }
+}
+

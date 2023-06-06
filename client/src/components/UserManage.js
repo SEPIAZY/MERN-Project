@@ -24,6 +24,7 @@ export default function UserManage() {
   const [id, setId] = useState();
   const [role, setRole] = useState();
   const [profile, setProfile] = useState();
+
     const handleComfirm = async (itemId) => {
       Swal.fire({
         title: "Delete this user?",
@@ -56,7 +57,7 @@ export default function UserManage() {
     const fetchData = async () => {
       
       const result = await getUserAc({
-        name: text,
+        username: text,
         role: role,
         profile: profile
       });
@@ -65,7 +66,7 @@ export default function UserManage() {
     };
 
     fetchData();
-  }, [id, text, refresh]);
+  }, [id, text, role, profile, refresh]);
 
   return (
     <div className="bg-white">
@@ -113,7 +114,7 @@ export default function UserManage() {
                   <div className="text-area mt-2 md:mt-6">
                     <p className="text-black font-semibold">{item.username}</p>
                   </div>
-                  <div className="cta flex space-x-2 py-3 ">
+                  <div className="cta flex space-x-2 py-3">
                     <button
                       className="py-1 w-3/6 md:w-2/6 bg-white border border-gray-400 rounded-xl"
                       type="button"
