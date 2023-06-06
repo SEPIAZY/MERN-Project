@@ -12,6 +12,8 @@ import Navbar from "../components/Nav";
 import { searchItem } from "../helper/helper";
 import { IoIosSearch, IoIosRefresh } from "react-icons/io";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { AiOutlinePlus } from 'react-icons/ai';
+import { FaCheck } from 'react-icons/fa';
 
 export default function SocialUser() {
   const [filterBar, setFilterBar] = useState(false);
@@ -118,13 +120,27 @@ export default function SocialUser() {
     return false;
   };
 
-  const handleOfTheColorOfHeart = (itemId) => {
-    if (isItemInCollection(itemId)) {
-      return "red";
-    } else {
-      return "gray";
-    }
-  };
+  const handleAddToCollection = (itemId) => {
+    const userid = apiData?._id;
+    if (userid) {
+      if (isItemInCollection(itemId)) {
+        // Show pop-up message when item is already in collection
+        alert('This item is already in your collection');
+      } else {
+        setItems((prevItems) => {
+          return prevItems.map((item) => {
+            if (item._id === itemId) {
+              const updatedItem = { ...item, liked: true };
+              setLikedItems((prevLikedItems) => [...prevLikedItems, itemId]);
+              updateUserCollection(userid, [...likedItems, itemId]);
+              return updatedItem;
+            }
+            return item;
+          });
+        });
+      }
+    }};
+
 
   return (
     <div className="bg-white">
@@ -309,21 +325,15 @@ export default function SocialUser() {
                   className="card rounded-xl w-4/5 md:w-1/4 bg-white drop-shadow-lg rounded-xl p-5 py-4 relative cursor-pointer hover:scale-105 transition-all duration-300"
                 >
                   <button
-                    onClick={() => handleLike(item._id)}
-                    className={`absolute top-5 right-7 w-12 h-12 rounded-full bg-white border border-gray-300 flex justify-center items-center
-                    ${handleOfTheColorOfHeart(item._id)}`}
+                    onClick={() => handleAddToCollection(item._id)}
+                    className="absolute top-5 right-7 w-12 h-12 rounded-full bg-white border border-gray-300 flex justify-center items-center
+                    "
                   >
                     {isItemInCollection(item._id) ? (
-                      <AiFillHeart
-                        className="w-5 h-5 text-red-500"
-                        strokeWidth={0.1}
-                      />
-                    ) : (
-                      <AiOutlineHeart
-                        className="w-5 h-5 text-gray-500"
-                        strokeWidth={0.1}
-                      />
-                    )}
+                    <FaCheck className="w-5 h-5 text-green-500" />
+                  ) : (
+                    <AiOutlinePlus className="w-5 h-5 text-gray-500" strokeWidth={0.1} />
+                  )}
                   </button>
                   <div className="w-full md:w-6/6">
                     <div className="img-area h-32 ml-2 md:h-56 md:ml-4 flex justify-center">

@@ -41,6 +41,7 @@ router.route('/updateUserRequest/:id').put(admincontroller.updateUserRequest); /
 router.route('/deleteitem/:id').delete(admincontroller.deleteItem); // delete item from the database
 router.route('/deleteUserRequest/:id').delete(admincontroller.deleteUserRequest); // delete request from the database
 router.route('/deleteUserAc/:id').delete(admincontroller.deleteUserAc); // delete user from the database
+router.route('/deleteUserCollection/:userid/:itemid').delete(usercontroller.deleteUserCollection); // delete user from the database
 
 
 export default router;
