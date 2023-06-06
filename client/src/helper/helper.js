@@ -229,69 +229,80 @@ export async function deleteItem(itemId) {
 
 //search item function
 export async function searchItem(searchItem) {
-    try {
-        const {_id, name, size, type, createdAt} = searchItem;
-        // console.log("search:",_id, name, size, type, createdAt)
-        // console.log(searchTerm)
-        const encodedSearchTerm = encodeURIComponent(name);
-        // console.log(encodedSearchTerm)
-        let api_sent = `http://localhost:8080/api/getAllCards?`
-        let check = false;
-        if (_id){
-          if(check){api_sent = api_sent + '&'}
-          api_sent = api_sent + `_id=${_id}`
-          check = true;
-        }
-        if (encodedSearchTerm !== "undefined"){
-          if(check){api_sent = api_sent + '&'}
-          api_sent = api_sent + `name=${encodedSearchTerm}`
-          check = true;
-        }
-        if (size){
-          if(check){api_sent = api_sent + '&'}
-          api_sent = api_sent + `size=${size}`
-          check = true;
-        }
-        if (type){
-          if(check){api_sent = api_sent + '&'}
-          api_sent = api_sent + `type=${type}`
-          check = true;
-        }
-        if (createdAt){
-          if(check){api_sent = api_sent + '&'}
-          api_sent = api_sent + `createdAt=${createdAt}`
-          check = true;
-        }
-        // console.log("api_sent",api_sent)
-        const response = await fetch(api_sent);
-        
-        if (!response.ok) {
-          throw new Error("Request failed");
-        }
-        
-        const data = await response.json();
-        const items = data.map((item) => {
-          return {
-            _id: item._id,
-            name: item.name,
-            size: item.size,
-            type: item.type,
-            image: item.image,
-            createdAt: item.createdAt,
-          };
-        });
-        return items;
-      } catch (error) {
-        console.error("Error fetching items:", error);
-        return []; // Return an empty array or handle the error as per your requirement
+  try {
+    const { _id, name, size, type, createdAt } = searchItem;
+    // console.log("search:",_id, name, size, type, createdAt)
+    // console.log(searchTerm)
+    const encodedSearchTerm = encodeURIComponent(name);
+    // console.log(encodedSearchTerm)
+    let api_sent = `http://localhost:8080/api/getAllCards?`;
+    let check = false;
+    if (_id) {
+      if (check) {
+        api_sent = api_sent + "&";
       }
+      api_sent = api_sent + `_id=${_id}`;
+      check = true;
+    }
+    if (encodedSearchTerm !== "undefined") {
+      if (check) {
+        api_sent = api_sent + "&";
+      }
+      api_sent = api_sent + `name=${encodedSearchTerm}`;
+      check = true;
+    }
+    if (size) {
+      if (check) {
+        api_sent = api_sent + "&";
+      }
+      api_sent = api_sent + `size=${size}`;
+      check = true;
+    }
+    if (type) {
+      if (check) {
+        api_sent = api_sent + "&";
+      }
+      api_sent = api_sent + `type=${type}`;
+      check = true;
+    }
+    if (createdAt) {
+      if (check) {
+        api_sent = api_sent + "&";
+      }
+      api_sent = api_sent + `createdAt=${createdAt}`;
+      check = true;
+    }
+    // console.log("api_sent",api_sent)
+    const response = await fetch(api_sent);
+
+    if (!response.ok) {
+      throw new Error("Request failed");
+    }
+
+    const data = await response.json();
+    const items = data.map((item) => {
+      return {
+        _id: item._id,
+        name: item.name,
+        size: item.size,
+        type: item.type,
+        image: item.image,
+        createdAt: item.createdAt,
+      };
+    });
+    return items;
+  } catch (error) {
+    console.error("Error fetching items:", error);
+    return []; // Return an empty array or handle the error as per your requirement
+  }
 }
 
 //update item fuction
-export async function updateCards(id,item) {
+export async function updateCards(id, item) {
   try {
     const { data } = await axios.put(
-      `http://localhost:8080/api/updateitem/${id}`,item
+      `http://localhost:8080/api/updateitem/${id}`,
+      item
     );
     return Promise.resolve({ data });
   } catch (error) {
@@ -300,12 +311,13 @@ export async function updateCards(id,item) {
 }
 
 //update item to user's collection from likedItems
-export async function updateUserCollection(userid,likeditemid) {
+export async function updateUserCollection(userid, likeditemid) {
   try {
     // console.log("userid",userid,"likeditemid",likeditemid)
-    
+
     const { data } = await axios.put(
-      `http://localhost:8080/api/updatecollection/${userid}`,{ likeditemid }
+      `http://localhost:8080/api/updatecollection/${userid}`,
+      { likeditemid }
     );
     return Promise.resolve({ data });
   } catch (error) {
@@ -317,7 +329,8 @@ export async function updateUserCollection(userid,likeditemid) {
 export async function userRequestItem(item) {
   try {
     const { data } = await axios.post(
-      "http://localhost:8080/api/userRequest",item
+      "http://localhost:8080/api/userRequest",
+      item
     );
     return Promise.resolve({ data });
   } catch (error) {
@@ -327,7 +340,6 @@ export async function userRequestItem(item) {
 
 //get user request item function
 export async function getUserRequestItem() {
-
   try {
     const response = await fetch(`http://localhost:8080/api/getUserRequest`);
     if (!response.ok) {
@@ -355,7 +367,7 @@ export async function getUserRequestItem() {
 //delete user request item function
 export async function deleteUserRequestItem(itemId) {
   try {
-    console.log("deleteUserRequestItem",itemId)
+    console.log("deleteUserRequestItem", itemId);
     const response = await fetch(
       `http://localhost:8080/api/deleteUserRequest/${itemId}`,
       {
@@ -374,13 +386,59 @@ export async function deleteUserRequestItem(itemId) {
 }
 
 //updat user request item function
-export async function updateUserRequestItem(id,item) {
+export async function updateUserRequestItem(id, item) {
   try {
     const { data } = await axios.put(
-      `http://localhost:8080/api/updateUserRequest/${id}`,item
+      `http://localhost:8080/api/updateUserRequest/${id}`,
+      item
     );
     return Promise.resolve({ data });
   } catch (error) {
     return Promise.reject({ error });
+  }
+}
+
+//get user account function
+export async function getUserAc({}) {
+  try {
+    const response = await fetch(`http://localhost:8080/api/getUserAc`);
+    if (!response.ok) {
+      throw new Error("Request failed");
+    }
+    const data = await response.json();
+    const items = data.items.map((item) => {
+      return {
+        _id: item._id,
+        username: item.username,
+        profile: item.profile,
+        role: item.role,
+      };
+    });
+
+    return items;
+  } catch (error) {
+    console.error("Error fetching items:", error);
+    return []; // Return an empty array or handle the error as per your requirement
+  }
+}
+
+//delete user account function
+export async function deleteUserAc(itemId) {
+  try {
+    // console.log("deleteUserAc", itemId);
+    const response = await fetch(
+      `http://localhost:8080/api/deleteUserAc/${itemId}`,
+      {
+        method: "DELETE",
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Request failed");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    return { error: error.message };
   }
 }

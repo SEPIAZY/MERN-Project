@@ -1,5 +1,6 @@
 import bearbrick from '../model/bearbrick.model.js'
 import request from '../model/request.model.js'
+import UserModel from '../model/User.model.js'
 
 /** POST: http://localhost:8080/api/additem 
  * @param : {
@@ -207,6 +208,36 @@ export async function updateUserRequest(req, res) {
 
     return res.status(200).json({ msg: "Request updated successfully", updatedItem });
   } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
+/** GET: http://localhost:8080/api/getUserAccount*/
+export async function getUserAc(req, res) {
+  try {
+    // Fetch all items from the database
+    const items = await UserModel.find();
+
+    return res.status(200).json({ items });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
+/** DELETE: http://localhost:8080/api/deleteUserAc*/
+export async function deleteUserAc(req, res) {
+  try {
+    const userId = req.params.id;
+    // Find the item by ID and remove it
+    const deletedUser = await UserModel.findByIdAndRemove(userId);
+
+    if (!deletedUser) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    return res.status(200).json({ msg: "User deleted successfully", deletedUser });
+  } 
+  catch (error) {
     return res.status(500).json({ error: error.message });
   }
 }

@@ -27,6 +27,7 @@ router.route('/createResetSession').get(controller.createResetSession) // reset 
 router.route('/getitem').get(admincontroller.getAllItems); // get all the items from the database
 router.route('/getallcards').get(admincontroller.getAllCards); // search item from the database
 router.route('/getUserRequest').get(admincontroller.getUserRequest); // get all the user request from the database
+router.route('/getUserAc').get(admincontroller.getUserAc); // get all the user request from the database
 
 /** PUT Methods */
 router.route('/updateuser').put(Auth, controller.updateUser); // is use to update the user profile
@@ -38,6 +39,7 @@ router.route('/updateUserRequest/:id').put(admincontroller.updateUserRequest); /
 /** DELETE Methods */
 router.route('/deleteitem/:id').delete(admincontroller.deleteItem); // delete item from the database
 router.route('/deleteUserRequest/:id').delete(admincontroller.deleteUserRequest); // delete request from the database
+router.route('/deleteUserAc/:id').delete(admincontroller.deleteUserAc); // delete user from the database
 
 
 export default router;

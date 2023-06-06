@@ -18,6 +18,7 @@ import Collection from './pages/Collection';
 import Friend from './pages/Friend';
 import UserRequest from './pages/userrequest';
 import RequestFromUser from './components/RequestFromUser';
+import UserManage from './components/UserManage';
 
 
 /** auth middleware */
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
     {
         path : '/requestfromuser',
         element : <RequestFromUser></RequestFromUser>
+    },
+    {
+        path : '/usermanage',
+        element : <UserManage></UserManage>
     }
 ])
 

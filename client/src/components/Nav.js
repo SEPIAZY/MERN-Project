@@ -115,7 +115,7 @@ export default function Navbar() {
                         href="#"
                         className="block px-4 py-2 text-lg text-neutral-900 hover:bg-neutral-100 hover:text-neutral-900"
                         role="menuitem"
-                        onClick={() => handleDropdownItemClick("/admin/user-manage")}
+                        onClick={() => handleDropdownItemClick("/usermanage")}
                       >
                         User Manage
                       </a>
