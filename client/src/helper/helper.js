@@ -39,8 +39,8 @@ export async function getUser({ username }) {
 /** register user function */
 export async function registerUser(credentials) {
   try {
-    console.log("check");
-    console.log(credentials);
+    // console.log("check");
+    // console.log(credentials);
     const {
       data: { msg },
       status,
@@ -306,6 +306,78 @@ export async function updateUserCollection(userid,likeditemid) {
     
     const { data } = await axios.put(
       `http://localhost:8080/api/updatecollection/${userid}`,{ likeditemid }
+    );
+    return Promise.resolve({ data });
+  } catch (error) {
+    return Promise.reject({ error });
+  }
+}
+
+//user request item function
+export async function userRequestItem(item) {
+  try {
+    const { data } = await axios.post(
+      "http://localhost:8080/api/userRequest",item
+    );
+    return Promise.resolve({ data });
+  } catch (error) {
+    return Promise.reject({ error });
+  }
+}
+
+//get user request item function
+export async function getUserRequestItem() {
+
+  try {
+    const response = await fetch(`http://localhost:8080/api/getUserRequest`);
+    if (!response.ok) {
+      throw new Error("Request failed");
+    }
+    const data = await response.json();
+    const items = data.items.map((item) => {
+      return {
+        _id: item._id,
+        name: item.name,
+        size: item.size,
+        type: item.type,
+        image: item.image,
+        createdAt: item.createdAt,
+      };
+    });
+
+    return items;
+  } catch (error) {
+    console.error("Error fetching items:", error);
+    return []; // Return an empty array or handle the error as per your requirement
+  }
+}
+
+//delete user request item function
+export async function deleteUserRequestItem(itemId) {
+  try {
+    console.log("deleteUserRequestItem",itemId)
+    const response = await fetch(
+      `http://localhost:8080/api/deleteUserRequest/${itemId}`,
+      {
+        method: "DELETE",
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Request failed");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error deleting request:", error);
+    return { error: error.message };
+  }
+}
+
+//updat user request item function
+export async function updateUserRequestItem(id,item) {
+  try {
+    const { data } = await axios.put(
+      `http://localhost:8080/api/updateUserRequest/${id}`,item
     );
     return Promise.resolve({ data });
   } catch (error) {

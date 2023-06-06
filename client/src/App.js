@@ -16,6 +16,8 @@ import AddItem from './components/AddItem';
 import UpdateItem from './components/UpdateItem';
 import Collection from './pages/Collection';
 import Friend from './pages/Friend';
+import UserRequest from './pages/userrequest';
+import RequestFromUser from './components/RequestFromUser';
 
 
 /** auth middleware */
@@ -74,6 +76,14 @@ const router = createBrowserRouter([
     {
         path : '/friend',
         element : <Friend></Friend>
+    },
+    {
+        path : '/userrequest',
+        element : <UserRequest></UserRequest>
+    },
+    {
+        path : '/requestfromuser',
+        element : <RequestFromUser></RequestFromUser>
     }
 ])
 

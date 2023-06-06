@@ -105,10 +105,9 @@ export default function Navbar() {
                       aria-labelledby="options-menu"
                     >
                       <a
-                        href="#"
                         className="block px-4 py-2 text-lg text-neutral-900 hover:bg-neutral-100 hover:text-neutral-900"
                         role="menuitem"
-                        onClick={() => handleDropdownItemClick("/admin/user-request")}
+                        onClick={() => handleDropdownItemClick("/requestfromuser")}
                       >
                         User Request
                       </a>
@@ -139,6 +138,17 @@ export default function Navbar() {
                 )}
               </div>
             )}
+            {role === "user" && (
+              <div className="relative inline-block text-left">
+                <button
+                  className="text-lg hover:scale-105 transition-all duration-300"
+                  onClick={() => navigate("/userrequest")}
+                >
+                  Request
+                </button>
+              </div>
+            )}
+            
           </div>
 
           <div className="flex items-center">

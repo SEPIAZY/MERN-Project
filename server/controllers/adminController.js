@@ -1,4 +1,5 @@
 import bearbrick from '../model/bearbrick.model.js'
+import request from '../model/request.model.js'
 
 /** POST: http://localhost:8080/api/additem 
  * @param : {
@@ -160,3 +161,52 @@ export async function getAllCards(req, res) {
   //   res.status(500).json({ error: 'An error occurred while fetching matching items.' });
   // }
 };
+
+/** GET: http://localhost:8080/api/getUserRequest*/
+export async function getUserRequest(req, res) {
+  try {
+    // Fetch all items from the database
+    const items = await request.find();
+
+    return res.status(200).json({ items });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
+/** DELETE: http://localhost:8080/api/deleteUserRequest*/
+export async function deleteUserRequest(req, res) {
+  try {
+    const reqId = req.params.id;
+    // Find the item by ID and remove it
+    const deletedItem = await request.findByIdAndRemove(reqId);
+
+    if (!deletedItem) {
+      return res.status(404).json({ msg: "Request not found" });
+    }
+
+    return res.status(200).json({ msg: "Request deleted successfully", deletedItem });
+  } 
+  catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
+/** PUT: http://localhost:8080/api/updateUserRequest*/
+export async function updateUserRequest(req, res) {
+  try {
+    const reqId = req.params.id;
+    const updatedData = req.body;
+
+    // Find the item by ID and update it
+    const updatedItem = await request.findByIdAndUpdate(reqId, updatedData, { new: true });
+
+    if (!updatedItem) {
+      return res.status(404).json({ msg: "Request not found" });
+    }
+
+    return res.status(200).json({ msg: "Request updated successfully", updatedItem });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
