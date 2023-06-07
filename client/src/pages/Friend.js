@@ -7,6 +7,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { getUserAc } from "../helper/helper";
 import { findUserAc } from "../helper/helper";
 import { fetchOtherUserCollection } from "../helper/helper";
+import Footer from "../components/Footer";
 
 export default function Friend() {
   const navigate = useNavigate();
@@ -119,6 +120,7 @@ export default function Friend() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

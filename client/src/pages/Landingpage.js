@@ -11,13 +11,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import ig from "../assets/ig_icon.png";
-import fb from "../assets/fb_icon.png";
 import { Autoplay, Pagination, Navigation } from "swiper";
 import poster from "../assets/poster6.jpg";
 import posterblur from "../assets/posterblur.jpg";
 import poster5 from "../assets/poster5.jpeg";
 import bear from "../assets/bear.png";
+import footer from "../components/Footer.js";
+import Footer from "../components/Footer.js";
 
 export default function LandingPage() {
   const [toggle, setToggle] = useState(false);
@@ -102,24 +102,21 @@ export default function LandingPage() {
       <div className="container mx-auto">
         <Toaster position="top-center" reverseOrder={false}></Toaster>
 
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex-col justify-center items-center">
           <div
-            className="w-full rounded-3xl mt-10 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${posterblur})`}}
+            className="w-full md:rounded-3xl md:mt-10 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${posterblur})` }}
           >
             <div className="flex flex-col md:flex-row md:justify-between">
-              <div
-                className="mt-auto mb-auto"
-                style={{ width: "50%", height: "28rem" }}
-              >
+              <div className="mt-auto mb-auto md:w-1/2 md:28">
                 <img
                   src={poster}
-                  className="ml-20 w-full h-full rounded-3xl shadow-xl"
+                  className="md:ml-20 md:w-full md:h-full md:rounded-3xl shadow-xl"
                   alt="Poster"
                 />
               </div>
 
-              <div className="title flex flex-col items-left py-24">
+              <div className="title flex flex-col items-left py-10 md:py-24">
                 <h4 className="text-white text-2xl md:text-4xl px-16 font-thin">
                   Welcome to
                 </h4>
@@ -152,7 +149,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="flex flex-col justify-center items-center pt-14">
-            <h2 className="text-black-800 text-2xl md:text-4xl px-16 font-bold py-2">
+            <h2 className="text-black-800 text-xl md:text-2xl md:text-4xl px-16 font-bold py-2">
               SEE ALL ITEMS IN SOCIAL
             </h2>
             <h2 className="text-gray-500 text-lg md:text-xl px-16 font-normal py-2">
@@ -162,33 +159,35 @@ export default function LandingPage() {
         </div>
       </div>
 
-      <div className="flex flex-row justify-center items-stretch space-x-4 mt-10">
+      <div className="flex flex-col md:flex-row justify-center items-stretch ml-20 md:ml-0 md:space-x-4 mt-5 md:mt-10 gap-3 md:gap-0">
         {items.map((item) => (
           <div
             key={item._id}
-            className="card flex flex-col rounded-xl w-5/6 md:w-64 bg-white border border-gray-300 shadow-md p-5 py-4 relative cursor-pointer hover:scale-105 transition-all duration-300"
+            className="card flex flex-col rounded-xl w-3/4 md:w-64 bg-white border border-gray-300 shadow-md p-5 py-4 relative cursor-pointer hover:scale-105 transition-all duration-300"
           >
             <div className="w-full flex-grow">
               <div className="img-area h-32 md:h-44 ml-auto mr-auto flex justify-center">
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="rounded-lg w-4/6 h-full md:w-5/6 md:h-full"
+                  className="rounded-lg w-full h-full md:w-5/6 md:h-full"
                 />
               </div>
             </div>
             <div className="text-area mt-2 md:mt-6 flex-grow">
-              <p className="text-black font-semibold">{item.name}</p>
+              <p className="text-black font-semibold text-xs md:text-lg">
+                {item.name}
+              </p>
             </div>
-            <div className="cta flex space-x-2 py-3">
+            <div className="cta flex flex-col md:flex-row md:space-x-2 py-3">
               <button
-                className="py-1 w-3/6 md:w-4/6 bg-white border border-gray-400 rounded-xl"
+                className="py-1 w-full md:w-3/6 text-xs md:text-sm bg-white border border-gray-400 rounded-md md:rounded-xl"
                 type="button"
               >
                 {item.size}
               </button>
               <button
-                className="py-1 w-2/6 md:w-2/6 bg-white border border-gray-400 rounded-xl"
+                className="py-1 w-full md:w-3/6 text-xs md:text-sm bg-white border border-gray-400 rounded-md md:rounded-xl mt-2 md:mt-0"
                 type="button"
               >
                 {item.type}
@@ -199,24 +198,24 @@ export default function LandingPage() {
       </div>
 
       <div
-        className="flex flex-row justify-center items-stretch space-x-4 pt-5"
+        className="flex flex-col justify-center items-stretch space-x-4 pt-5"
         // style={{ width: "200rem", height: "40rem"}}
       >
-        <div className="relative" style={{ width: "85rem", height: "40rem" }}>
-          <img src={poster5} className="rounded-3xl w-full h-full" />
-          <div className="cta grid grid-cols-2 py-12 absolute bottom-4">
+        <div className="relative md:w-full">
+          <img src={poster5} className="w-full h-full" />
+          <div className="cta grid grid-cols-2 py-12 absolute bottom-0 md:bottom-4">
             <button
-              className="md:ml-32 py-1 md:w-36 md:h-12 bg-white rounded-3xl shadow-md ml-12 hover:opacity-80 font-blod tracking-wide"
+              className="md:ml-32 text-xs md:text-lg py-1 w-24 h-8 md:w-36 md:h-12 bg-white rounded-3xl shadow-md ml-12 hover:opacity-80 font-blod tracking-wide"
               type="button"
             >
               See More
             </button>
             <div className="flex items-center justify-start space-x-1">
-              <span className="font-semibold text-white text-lg tracking-wide">
+              <span className="font-semibold text-white text-xs md:text-lg tracking-wide">
                 New items
               </span>
               <span className="px-1 font-semibold text-white text-lg">·</span>
-              <span className="font-thin text-white text-lg">
+              <span className="font-thin text-white text-xs md:text-lg">
                 wait for new collection
               </span>
             </div>
@@ -224,65 +223,7 @@ export default function LandingPage() {
         </div>
       </div>
 
-      <div className="mt-8 md:mt-10">
-        <div className="flex flex-col justify-center items-center mt-10">
-          <div className="flex flex-row gap-2 text-xl font-bold">
-            <h1>B</h1>
-            <h1>E</h1>
-          </div>
-          <div className="flex flex-row gap-1">
-            <h1>@</h1>
-            <h1 className="text-xl font-bold">R</h1>
-          </div>
-        </div>
-      </div>
-
-      <div className="flex flex-col items-start mt-3">
-        <hr className="border-gray-400 w-full" />
-      </div>
-
-      <div className="container mx-auto flex flex-col justify-center items-center md:mt-8">
-        <div className="card flex flex-row gap-40">
-          <div className="">
-            <h3 className="text-lg font-semibold">About</h3>
-            <p className="mt-2 text-base">Privacy Policy</p>
-            <p className="mt-1 text-base">Terms & Conditions</p>
-          </div>
-
-          <div className="">
-            <h3 className="text-lg font-semibold">User Support</h3>
-            <p className="mt-2 text-base">FAQs</p>
-            <p className="mt-1 text-base">Announcement</p>
-          </div>
-
-          <div className="">
-            <h3 className="text-lg font-semibold">Contact</h3>
-            <p className="mt-2 text-base">Line: @bbearbrick</p>
-            <p className="mt-1 text-base">E-mail: bbrick@gmail.com</p>
-          </div>
-
-          <div className="">
-            <h3 className="text-lg font-semibold">Follow Us</h3>
-            <div className="flex flex-row mt-2 space-x-4">
-              <a>
-                <img src={ig} className="w-8 h-8" />
-              </a>
-              <a>
-                <img src={fb} className="w-8 h-8 rounded-md" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="flex flex-col items-start mt-20">
-        <hr className="border-gray-400 w-full" />
-      </div>
-
-      <div className="flex flex-col justify-center items-center mt-4 mb-4 text-sm font-thin text-gray-400 tracking-wide">
-        <p>© 2023 Copyright | BE@R</p>
-      </div>
-      <br></br>
+      <Footer/>
     </div>
   );
 }

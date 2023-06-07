@@ -14,6 +14,7 @@ import { IoIosSearch, IoIosRefresh } from "react-icons/io";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FaCheck } from 'react-icons/fa';
+import Footer from "../components/Footer.js";
 
 export default function SocialUser() {
   const [filterBar, setFilterBar] = useState(false);
@@ -336,6 +337,8 @@ export default function SocialUser() {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }
