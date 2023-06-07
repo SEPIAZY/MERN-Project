@@ -1,14 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import avatar from "../assets/profile.jpg";
-import toast, { Toaster } from "react-hot-toast";
-import { useFormik } from "formik";
-import { passwordValidate } from "../helper/validate";
-import useFetch from "../hooks/fetch.hook";
-import { useAuthStore } from "../store/store";
-import { verifyPassword } from "../helper/helper";
-
-import styles from "../styles/Landing.module.css";
 import { IoLogOutOutline } from "react-icons/io5";
 
 export default function Navbar() {
@@ -44,6 +35,7 @@ export default function Navbar() {
   };
 
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showAdminPanel, setShowAdminPanel] = useState(false);
   const handleDropdownToggle = () => {
     setShowDropdown(!showDropdown);
   };
@@ -53,12 +45,17 @@ export default function Navbar() {
     navigate(path);
   };
 
+  const handleDropdownAdminClick = (path) => {
+    setShowAdminPanel(!showAdminPanel);
+    navigate(path);
+  };
+
   return (
     <div className="bg-white border shadow">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <h1 className="text-neutral-800 text-2xl font-bold cursor-pointer">
+            <h1 className="text-neutral-800 text-xl md:text-2xl font-bold cursor-pointer">
               B E @ R
             </h1>
           </div>
@@ -82,7 +79,7 @@ export default function Navbar() {
             >
               Friend
             </button>
-            <button 
+            <button
               className="text-lg hover:scale-105 transition-all duration-300"
               onClick={() => navigate("/collection")}
             >
@@ -107,7 +104,9 @@ export default function Navbar() {
                       <a
                         className="block px-4 py-2 text-lg text-neutral-900 hover:bg-neutral-100 hover:text-neutral-900"
                         role="menuitem"
-                        onClick={() => handleDropdownItemClick("/requestfromuser")}
+                        onClick={() =>
+                          handleDropdownItemClick("/requestfromuser")
+                        }
                       >
                         User Request
                       </a>
@@ -148,7 +147,6 @@ export default function Navbar() {
                 </button>
               </div>
             )}
-            
           </div>
 
           <div className="flex items-center">
@@ -198,35 +196,74 @@ export default function Navbar() {
             <div className="flex flex-col space-y-2">
               <a
                 className="text-neutral-900 px-3 py-2 rounded-xl text-lg font-medium cursor-pointer"
+                onClick={() => navigate("/landingpage")}
+              >
+                Home
+              </a>
+              <a
+                className="text-neutral-900 px-3 py-2 rounded-xl text-lg font-medium cursor-pointer"
                 onClick={() => navigate("/social")}
               >
                 Social
               </a>
               <a
-                href="#"
                 className="text-neutral-900 px-3 py-2 rounded-md text-lg font-medium cursor-pointer"
+                onClick={() => navigate("/friend")}
               >
-                Collection
+                Friend
               </a>
               <a
-                href="#"
                 className="text-neutral-900 px-3 py-2 rounded-md text-lg font-medium cursor-pointer"
-              >
-                QR Code
-              </a>
-              <a
-                href="#"
-                className="text-neutral-900 px-3 py-2 rounded-md text-lg font-medium cursor-pointer"
+                onClick={() => navigate("/collection")}
               >
                 Profile
               </a>
+              {/* User Link */}
+              {role === "user" && (
+                <a
+                  className="text-neutral-900 px-3 py-2 rounded-md text-lg font-medium cursor-pointer"
+                  onClick={() => navigate("/userrequest")}
+                >
+                  Request
+                </a>
+              )}
               {/* Admin Link */}
               {role === "admin" && (
-                <div
-                  className="text-neutral-900 px-3 py-2 rounded-md text-lg font-medium cursor-pointer"
-                  onClick={() => navigate("/admin")}
-                >
-                  Admin
+                <div className="flex flex-col">
+                  <div
+                    className="text-neutral-900 px-3 py-2 rounded-md text-lg font-medium cursor-pointer border border-black"
+                    onClick={handleDropdownAdminClick}
+                  >
+                    Admin
+                  </div>
+                  {showAdminPanel && (
+                    <div className="flex flex-col">
+                      <a
+                        className="text-neutral-900 px-3 py-2 rounded-md text-lg font-medium cursor-pointer"
+                        onClick={() => navigate("/requestfromuser")}
+                      >
+                        User Request
+                      </a>
+                      <a
+                        className="text-neutral-900 px-3 py-2 rounded-md text-lg font-medium cursor-pointer"
+                        onClick={() => navigate("/usermanage")}
+                      >
+                        User Manage
+                      </a>
+                      <a
+                        className="text-neutral-900 px-3 py-2 rounded-md text-lg font-medium cursor-pointer"
+                        onClick={() => navigate("/additem")}
+                      >
+                        Create Item
+                      </a>
+                      <a
+                        className="text-neutral-900 px-3 py-2 rounded-md text-lg font-medium cursor-pointer"
+                        onClick={() => navigate("/updateitem")}
+                      >
+                        Update Item
+                      </a>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

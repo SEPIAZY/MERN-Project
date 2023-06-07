@@ -73,7 +73,7 @@ export default function UserManage() {
       <Navbar />
       <div className="container mx-auto py-10">
         <div className="flex flex-col justify-center items-start">
-          <h1 className="px-6 py-3 text-4xl font-bold tracking-wide">
+          <h1 className="px-6 py-3 text-3xl md:text-4xl font-bold tracking-wide">
             User Database
           </h1>
         </div>
@@ -96,7 +96,7 @@ export default function UserManage() {
                   className="card rounded-xl w-4/5 md:w-1/4 bg-white drop-shadow-lg rounded-xl p-5 py-4 relative cursor-pointer hover:scale-105 transition-all duration-300"
                 >
                   <FaTrash
-                    className="ml-auto mr-auto absolute top-7 right-9 text-2xl text-gray-400 cursor-pointer hover:text-black"
+                    className="ml-auto mr-auto absolute top-5 md:top-7 right-5 md:right-9 text-2xl text-gray-400 cursor-pointer hover:text-black"
                     onClick={() => {
                       handleComfirm(item._id);
                     }}

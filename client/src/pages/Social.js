@@ -147,7 +147,7 @@ export default function SocialUser() {
       <Navbar />
       <div className="mt-14 flex flex-col items-center justify-center ">
         <h1 className="text-2xl text-black font-bold">BE@RBRICK's World</h1>
-        <p className="mt-2 ml-5 text-normal text-gray-500">
+        <p className="mt-2 ml-auto mr-auto text-normal text-gray-500">
           Let's collect your favortite BE@RBRICK!
         </p>
 
@@ -189,7 +189,7 @@ export default function SocialUser() {
         <div>
           <div className="container mx-auto">
             <div className="px-6 py-0 md:py-6 flex overflow-x-auto">
-              <div className="card-container flex flex-wrap gap-4 justify-center w-full sm:w-2/5 md:w-full">
+              <div className="mt-4 md:mt-0 card-container flex flex-wrap gap-4 justify-center w-full sm:w-2/5 md:w-4/5 ml-auto mr-auto">
                 <div className="card flex-1 rounded-xl w-full bg-white border border-gray-300 rounded-xl p-5 py-4 relative">
                   <div className="w-full">
                     <div className="text-area ">
@@ -276,37 +276,6 @@ export default function SocialUser() {
                   </div>
                 </div>
 
-                <div className="card flex-1 rounded-xl w-full bg-white border border-gray-300 rounded-xl p-5 py-4 relative">
-                  <div className="w-full">
-                    <div className="text-area">
-                      <p className="text-black font-semibold">Sort</p>
-                      <div className="cta flex space-x-2 py-2 md:py-3">
-                        <button
-                          className={`px-2 py-1 w-3/6 md:w-3/6 h-10 bg-white border border-gray-400 rounded-xl ${
-                            activeSort === "Most Popular"
-                              ? "bg-black text-white"
-                              : "bg-white"
-                          }`}
-                          onClick={() => handleSortClick(0, "Most Popular")}
-                          type="button"
-                        >
-                          Most Popular
-                        </button>
-                        <button
-                          className={`px-2 py-1 w-2/6 md:w-2/6 h-10 bg-white border border-gray-400 rounded-xl ${
-                            activeSort === "User"
-                              ? "bg-black text-white"
-                              : "bg-white"
-                          }`}
-                          onClick={() => handleSortClick(1, "User")}
-                          type="button"
-                        >
-                          User
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

@@ -156,29 +156,30 @@ export default function UpdateItemPanel() {
 
       <div className="container mx-auto py-6">
         <div className="flex flex-col justify-center items-start">
-          <h1 className="px-6 py-3 text-4xl font-bold tracking-wide">
+          <h1 className="px-6 py-3 text-2xl md:text-3xl font-bold tracking-wide">
             BEARBRICK Database
           </h1>
         </div>
+        
         <div className="flex flex-row">
-          <IoIosSearch className="relative top-3 left-10 text-xl text-gray-500" />
+          <IoIosSearch className="relative top-2 md:top-3 left-8 md:left-10 text-xl text-gray-500" />
           <input
             type="text"
             placeholder="   Search"
-            className="w-3/5 h-12 pl-12 pr-32 rounded-xl border border-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+            className="w-4/6 h-10 md:h-12 pl-8 md:pl-12 md:pr-32 rounded-xl border border-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
             onChange={(e) => inputonChange(e)}
           />
           <button
-            className="w-1/6 md:w-1/12 h-12 bg-white border border-gray-400 text-black px-4 py-2 rounded-xl ml-2"
+            className="w-1/6 md:w-1/12 h-10 md:h-12 text-sm md:text-base bg-white border border-gray-400 text-black px-2 md:px-4 py-2 rounded-xl ml-2"
             onClick={handleFilterBar}
           >
             Filter
           </button>
           <button
-            className="h-12 px-4 py-2 border border-gray-400 rounded-xl ml-2"
+            className="h-10 md:h-12 px-4 py-2 border border-gray-400 rounded-xl ml-2"
             onClick={handleRefresh}
           >
-            <IoIosRefresh className="text-xl text-black cursor-pointer" />
+            <IoIosRefresh className="text-sm md:text-xl text-black cursor-pointer" />
           </button>
         </div>
       </div>
@@ -324,7 +325,7 @@ export default function UpdateItemPanel() {
             <div className="">
               <form className="flex flex-col md:flex-row md:justify-between gap-5">
                 <div className="img-area w-full md:w-1/2">
-                  <button className="mt-2 ml-6 text-xl text-black font-base cursor-pointer hover:underline" 
+                  <button className="mt-2 ml-6 md:text-xl text-black font-base cursor-pointer hover:underline" 
                   onClick={handleCloseEdit}
                   >
                     Cancel
@@ -334,7 +335,7 @@ export default function UpdateItemPanel() {
                       <img
                         src={file || fileUpdate}
 
-                        className="w-3/4 h-2/4 ml-auto mr-auto md:w-full md:h-full cursor-pointer rounded-xl shadow-md"
+                        className="w-full h-full ml-auto mr-auto md:w-full md:h-full cursor-pointer rounded-xl shadow-md"
                       />
                     </label>
                   </div>
@@ -345,28 +346,28 @@ export default function UpdateItemPanel() {
                     name="image"
                   />
                 </div>
-                <div className="mt-6 text-area w-full md:w-1/2">
-                  <div className="text-lg font-semibold tracking-wider">
+                <div className="md:mt-6 text-area w-full md:w-1/2">
+                  <div className="ml-7 text-lg font-semibold tracking-wider">
                     Name
                   </div>
                   <div className="py-2">
                     <input
                       value={nameUpdate}
                       onChange={(e) => setNameUpdate(e.target.value)}
-                      className="ml-2 h-12 text-lg px-5 bg-white border border-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+                      className="ml-7 md:ml-2 w-5/6 md:w-full h-10 md:h-12 text-lg px-5 bg-white border border-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
                       type="text"
                       placeholder="Name"
-                      style={{ width: "100%" }}
+                      
                     />
                   </div>
-                  <div className="mt-2 text-lg font-semibold tracking-wider">
+                  <div className="ml-7 mt-2 text-lg font-semibold tracking-wider">
                     Size
                   </div>
                   <div className="py-2">
                   <select
                     onChange={(e) => setSizeUpdate(e.target.value)}
-                    className="ml-2 h-12 text-lg px-5 rounded-xl bg-white border border-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
-                    style={{ width: "100%" }}
+                    className="ml-7 md:ml-2 w-5/6 md:w-full h-10 md:h-12 text-lg px-5 rounded-xl bg-white border border-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+                    
                   >
                     <option value="" >{sizeUpdate}</option>
                     <option value="" disabled>Select new size</option>
@@ -377,14 +378,14 @@ export default function UpdateItemPanel() {
                   </select>
 
                   </div>
-                  <div className="mt-2 text-lg font-semibold tracking-wider">
+                  <div className="ml-5 mt-2 text-lg font-semibold tracking-wider">
                     Type
                   </div>
                   <div className="py-2">
                     <select
                       onChange={(e) => setTypeUpdate(e.target.value)}
-                      className="ml-2 h-12 text-lg px-5 bg-white border border-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
-                      style={{ width: "100%" }}
+                      className="ml-7 md:ml-2 w-5/6 md:w-full h-10 md:h-12 text-lg px-5 bg-white border border-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+                      
                     >
                       <option value="" >{typeUpdate}</option>
                       <option value="" disabled>Select new type</option>
@@ -393,7 +394,7 @@ export default function UpdateItemPanel() {
                     </select>
                   </div>
                   <div className="py-6">
-                    <button className="w-full h-12 text-lg text-black bg-white border border-gray-400 rounded-xl hover:bg-black hover:text-white hover:scale-105 transition-all duration-300"
+                    <button className="ml-7 md:ml-2 w-5/6 md:w-full h-12 md:h-12 text-lg text-black bg-white border border-gray-400 rounded-xl hover:bg-black hover:text-white hover:scale-105 transition-all duration-300"
                     onClick={() => updateCard(idUpdate)}
                     >
                       Update Item

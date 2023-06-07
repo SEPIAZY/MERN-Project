@@ -72,7 +72,7 @@ export default function UserCollection() {
           </div>
           <div className="flex flex-row">
             <p className="font-bold">{items.length || 0} collections</p>
-            <p className="ml-5 font-bold">500 likes</p>
+            
           </div>
           <p className="ml-0 text-sm font-base">{apiData?.bio || ""}</p>
         </div>

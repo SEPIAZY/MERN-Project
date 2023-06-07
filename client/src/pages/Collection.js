@@ -11,6 +11,7 @@ import { BsTable } from "react-icons/bs";
 import { AiOutlineDelete } from "react-icons/ai";
 import { searchItem } from "../helper/helper";
 import { deleteUserCollection } from "../helper/helper";
+import {RiBearSmileLine} from "react-icons/ri";
 
 export default function MyCollection() {
   const [file, setFile] = useState();
@@ -34,6 +35,7 @@ export default function MyCollection() {
 
   const [likedItems, setLikedItems] = useState([]);
   const [items, setItems] = useState([]);
+  const [isLoadingItems, setIsLoadingItems] = useState(true);
 
   const handleDelete = async (itemId) => {
     const userid = apiData?._id;
@@ -56,17 +58,20 @@ export default function MyCollection() {
       });
       setItems(result);
       const likedItemIds = apiData?.item || [];
+      
       setLikedItems(likedItemIds);
+      setIsLoadingItems(false);
     };
 
     fetchData();
   }, [id, text, activeSize, activeType, apiData]);
 
+  
   return (
     <div className="bg-white">
       <Navbar />
 
-      <div className="mt-10 flex flex-row items-center justify-center gap-10">
+      <div className="mt-10 flex flex-row items-center justify-center gap-5 md:gap-10">
         <div className="profile flex justify-center py-4">
           <label htmlFor="profile">
             <img
@@ -77,30 +82,32 @@ export default function MyCollection() {
           </label>
         </div>
         <div className="textbox flex flex-col items-start gap-4">
-          <div className="flex flex-row">
-            <p className="text-xl text-gray-600">Hello, </p>
-            <h1 className="ml-2 text-xl font-base">
-              {apiData?.username || "username"}
-            </h1>
-            <button
-              className="ml-5 w-2/4 md:w-full h-8 md:h-8 text-sm bg-white border border-gray-400 text-black px-4 rounded-xl"
-              onClick={() => navigate("/profile")}
-            >
-              Edit profile
-            </button>
-          </div>
-          <div className="flex flex-row">
-            <p className="font-bold">{apiData?.item.length || 0} collections</p>
-            <p className="ml-5 font-bold">500 likes</p>
-          </div>
-          <p className="ml-0 text-sm font-base">{apiData?.bio || "bio"}</p>
-        </div>
+  <div className="flex flex-col md:flex-row">
+    <div className="flex flex-row items-center">
+      <p className="text-xl text-gray-600">Hello, </p>
+      <h1 className="ml-2 text-xl font-base">
+        {apiData?.username || "username"}
+      </h1>
+    </div>
+    <button
+      className="ml-0 md:ml-5 mt-3 md:mt-0 w-full md:w-2/4 h-8 md:h-8 text-sm bg-white border border-gray-400 text-black px-4 rounded-xl"
+      onClick={() => navigate("/profile")}
+    >
+      Edit profile
+    </button>
+  </div>
+  <div className="flex flex-row">
+    <p className="font-bold">{apiData?.item.length || 0} collections</p>
+  </div>
+  <p className="ml-0 text-sm font-base">{apiData?.bio || "bio"}</p>
+</div>
+
       </div>
 
       <hr className="mt-10 border-gray-300 w-full" />
 
       <div className="flex justify-center">
-        <hr className="border-black w-1/12" />
+        <hr className="border-black w-1/3 md:w-1/12" />
       </div>
 
       <div className="mt-3 flex items-center justify-center px-8 md:px-32">
@@ -112,7 +119,18 @@ export default function MyCollection() {
         <div className="user collection">
           <div className="px-6 py-6 flex overflow-x-auto">
             <div className="ml-auto mr-auto w-full card-container flex flex-wrap gap-4 mb-4 justify-center">
-              {items.map((item) => {
+            {likedItems.length === 0 ? (
+                <div className="mt-16 md:mt-12 text-2xl text-center font-bold">
+                  <div className="ml-auto mr-auto w-24 h-24 rounded-full bg-white border border-gray-300 flex justify-center items-center"> 
+                    <RiBearSmileLine className="text-4xl text-gray-500"/>
+                  </div>
+                  <p className="mt-7 text-2xl">No Collections</p>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                </div>
+              ) : (
+              items.map((item) => {
                 if (likedItems.includes(item._id)) {
                   return (
                     <div
@@ -157,7 +175,7 @@ export default function MyCollection() {
                     </div>
                   );
                 }
-              })}
+              }))}
             </div>
           </div>
         </div>

@@ -50,18 +50,18 @@ export default function Friend() {
       <Navbar />
       <div className="mt-14 flex flex-col items-center justify-center ">
         <h1 className="text-2xl text-black font-bold">BE@RBRICK Community</h1>
-        <p className="mt-2 ml-5 text-normal text-gray-500">
+        <p className="mt-2 ml-auto mr-auto text-normal text-gray-500">
           Let's see other profile!
         </p>
 
-        <div className="flex items-center md:w-4/6">
+        <div className="ml-4 md:ml-0 flex items-center md:w-4/6">
           <div className="container mx-auto py-4 md:py-6">
             <div className="flex flex-row">
               <IoIosSearch className="relative top-2 left-8 md:top-2 md:left-10 text-xl md:text-3xl text-gray-500" />
               <input
                 type="text"
                 placeholder="   Search"
-                className="w-3/5 md:w-10/12 h-10 md:h-12 text-sm pl-8 md:pl-12 pr-32 rounded-xl border border-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+                className="w-4/6 md:w-10/12 h-10 md:h-12 text-sm pl-8 md:pl-12 pr-32 rounded-xl border border-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
                 value={text}
                 onChange={inputonChange}
               />

@@ -62,7 +62,6 @@ export default function UserRequest() {
     <div className="bg-white">
       <Navbar />
       <div className="container mx-auto py-6">
-        
         <div className="flex flex-col justify-center items-start">
           <h1 className="px-6 py-3 text-4xl font-bold tracking-wide">
             Request Item
@@ -72,13 +71,13 @@ export default function UserRequest() {
           </p>
         </div>
         <br></br>
-        <div className="card rounded-xl bg-white bg-opacity-70 rounded-xl p-8 border border-gray-400 ">
+        <div className="card rounded-xl bg-white bg-opacity-70 rounded-xl p-8 md:border md:border-gray-400 ">
           <form
             className="flex flex-col md:flex-row md:justify-between gap-5"
             onSubmit={formik.handleSubmit}
           >
             <div className="img-area w-full md:w-1/2">
-              <div className="flex justify-center mt-14 h-80">
+              <div className="flex justify-center md:mt-14 h-80">
                 <label htmlFor="image">
                   <img
                     src={file || avatar}

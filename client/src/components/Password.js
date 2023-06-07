@@ -61,14 +61,14 @@ export default function Password() {
 
           <form className='py-1' onSubmit={formik.handleSubmit}>
               <div className='profile flex justify-center py-4'>
-                <div className='w-36 h-36 rounded-full cursor-pointer shadow-m'>
+                <div className='w-28 h-28 md:w-36 md:h-36 rounded-full cursor-pointer shadow-m'>
                   <img src={apiData?.profile || avatar} className="w-full h-full rounded-full" alt="avatar" />
                 </div>
               </div>
 
               <div className="textbox flex flex-col items-center gap-6">
-                  <input {...formik.getFieldProps('password')} className={styles.textbox} type="password" placeholder='Password' />
-                  <button className={styles.btn} type='submit'>Sign In</button>
+                  <input {...formik.getFieldProps('password')} className="rounded-xl w-2/3 md:w-3/4 h-12 md:h-14 p-5 shadow-md" type="password" placeholder='Password' />
+                  <button className="md:text-xl rounded-xl border border-black w-2/3 md:w-3/4 h-12 md:h-14 hover:bg-black hover:text-white transition duration-300 ease-in-out" type='submit'>Sign In</button>
               </div>
 
               <div className="text-center py-4">

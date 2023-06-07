@@ -18,6 +18,7 @@ import { getUserRequestItem } from "../helper/helper";
 import { deleteUserRequestItem } from "../helper/helper";
 import { updateUserRequestItem } from "../helper/helper";
 import { addItem } from "../helper/helper";
+import {CiSquareQuestion} from "react-icons/ci";
 
 export default function RequestFromUser() {
   const [items, setItems] = useState([]);
@@ -188,7 +189,7 @@ export default function RequestFromUser() {
 
       <div className="container mx-auto py-10">
         <div className="flex flex-col justify-center items-start">
-          <h1 className="px-6 py-3 text-4xl font-bold tracking-wide">
+          <h1 className="px-6 py-3 text-3xl md:text-4xl font-bold tracking-wide">
             Request From User
           </h1>
         </div>
@@ -306,7 +307,18 @@ export default function RequestFromUser() {
         <div className="user req database">
           <div className="px-6 py-6 flex overflow-x-auto">
             <div className="card-container w-full ml-auto mr-auto flex flex-wrap gap-4 mb-4 justify-center">
-              {items.map((item) => (
+            {items.length === 0 ? (
+                <div className="mt-20 md:mt-28 text-2xl text-center font-bold">
+                  <div className="ml-auto mr-auto w-24 h-24 rounded-full bg-white border border-gray-300 flex justify-center items-center"> 
+                    <CiSquareQuestion className="text-5xl text-gray-500"/>
+                  </div>
+                  <p className="mt-7 text-xl md:text-3xl">No Requests</p>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                </div>
+              ) : (
+              items.map((item) => (
                 <div
                   key={item._id}
                   className="card rounded-xl w-4/5 md:w-1/4 bg-white drop-shadow-lg rounded-xl p-5 py-4 relative cursor-pointer hover:scale-105 transition-all duration-300"
@@ -354,7 +366,8 @@ export default function RequestFromUser() {
                     </button>
                   </div>
                 </div>
-              ))}
+              ))
+              )}
             </div>
           </div>
         </div>
