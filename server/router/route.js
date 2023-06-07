@@ -29,6 +29,7 @@ router.route('/getallcards').get(admincontroller.getAllCards); // search item fr
 router.route('/getUserRequest').get(admincontroller.getUserRequest); // get all the user request from the database
 router.route('/getUserAc').get(admincontroller.getUserAc); // get all the user request from the database
 router.route('/findUserAc').get(admincontroller.findUserAc); // find all the user request from the database
+router.route('/fetchOtherUserCollection/:userid').get(usercontroller.fetchOtherUserCollection); // find all the user request from the database
 
 /** PUT Methods */
 router.route('/updateuser').put(Auth, controller.updateUser); // is use to update the user profile

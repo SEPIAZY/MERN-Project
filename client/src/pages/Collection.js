@@ -5,13 +5,11 @@ import toast, { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import useFetch from "../hooks/fetch.hook";
 import Navbar from "../components/Nav";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import styles from "../styles/Username.module.css";
 import extend from "../styles/Profile.module.css";
 import { BsTable } from "react-icons/bs";
 import { AiOutlineDelete } from "react-icons/ai";
 import { searchItem } from "../helper/helper";
-import { updateUserCollection } from "../helper/helper";
 import { deleteUserCollection } from "../helper/helper";
 
 export default function MyCollection() {

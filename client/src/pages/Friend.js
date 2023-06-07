@@ -6,26 +6,24 @@ import { IoIosSearch, IoIosRefresh } from "react-icons/io";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { getUserAc } from "../helper/helper";
 import { findUserAc } from "../helper/helper";
+import { fetchOtherUserCollection } from "../helper/helper";
 
 export default function Friend() {
+  const navigate = useNavigate();
   const [text, setText] = useState();
   const [activeSort, setActiveSort] = useState(null);
   const [items, setItems] = useState([]);
   const [id, setId] = useState();
   const [profile, setProfile] = useState();
   const [refresh, setRefresh] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const handleUserClick = (user) => {
+    setSelectedUser(user._id);
+    navigate(`/otherusercollection?id=${user._id}`);
+  };
 
   useEffect(() => {
-    // const fetchData = async () => {
-      
-    //   const result = await findUserAc({
-    //     name: text,
-    //     profile: profile
-    //   });
-    //   setItems(result);
-
-    // };
-
     const fetchData = async () => {
       try {
         const result = await findUserAc({text});
@@ -93,8 +91,8 @@ export default function Friend() {
                 <div
                   key={item._id}
                   className="card rounded-xl w-4/5 md:w-1/4 bg-white drop-shadow-lg rounded-xl p-5 py-4 relative cursor-pointer hover:scale-105 transition-all duration-300"
+                  onClick={() => handleUserClick(item)}
                 >
-
                   <div className="w-full md:w-6/6">
                     <div className="img-area h-32 md:h-56 flex justify-center">
                       <img

@@ -325,6 +325,27 @@ export async function updateUserCollection(userid, likeditemid) {
   }
 }
 
+//delete item from user's collection
+export async function deleteUserCollection(userid, itemId) {
+  try {
+    // console.log("deleteUserCollection",userid,itemId)
+    const response = await fetch(
+      `http://localhost:8080/api/deleteUserCollection/${userid}/${itemId}`,
+      {
+        method: "DELETE",
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Request failed");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error deleting item:", error);
+    return { error: error.message };
+  }
+}
+
 //user request item function
 export async function userRequestItem(item) {
   try {
@@ -472,9 +493,142 @@ export async function findUserAc({ text = '' }) {
       };
     });
     return items;
+
   } catch (error) {
     console.error("Error fetching users:", error);
     return []; // Return an empty array or handle the error as per your requirement
+  }
+}
+
+//fetch other user collection function
+// export async function fetchOtherUserCollection(userid) {
+//   try {
+//     console.log("fetchOtherUserCollection", userid);
+//     const response = await fetch(
+//       `http://localhost:8080/api/fetchOtherUserCollection/${userid}`
+//     );
+//     if (!response.ok) {
+//       throw new Error("Request failed");
+//     }
+//     const data = await response.json();
+//     console.log("data", data);
+//     const items = data.items.map((item) => {
+//       return {
+//         _id: item._id,
+//         name: item.name,
+//         size: item.size,
+//         type: item.type,
+//         image: item.image,
+//         createdAt: item.createdAt,
+//       };
+//     });
+
+//     return items;
+//   } catch (error) {
+//     console.error("Error fetching items:", error);
+//     return []; // Return an empty array or handle the error as per your requirement
+//   }
+// }
+
+//fetch other user collection function
+// export async function fetchOtherUserCollection(userid) {
+//   try {
+//     const response = await fetch(
+//       `http://localhost:8080/api/fetchOtherUserCollection/${userid}`
+//     );
+//     if (!response.ok) {
+//       throw new Error("Request failed");
+//     }
+//     const data = await response.json();
+//     console.log("data", data);
+//     const items = data.items.map((item) => {
+//       return {
+//         _id: item._id,
+//         name: item.name,
+//         size: item.size,
+//         type: item.type,
+//         image: item.image,
+//         createdAt: item.createdAt,
+//       };
+//     });
+
+//     const user = {
+//       username: data.username,
+//       bio: data.bio,
+//       profile: data.profile,
+//       collection: items,
+//     };
+
+//     return user;
+//   } 
+//   catch (error) {
+//     console.error("Error fetching user data and items:", error);
+//     return {}; // Return an empty object or handle the error as per your requirement
+//   }
+// }
+export async function fetchOtherUserCollection(userid) {
+  try {
+    const response = await fetch(`http://localhost:8080/api/fetchOtherUserCollection/${userid}`);
+    if (!response.ok) {
+      throw new Error("Request failed");
+    }
+    const data = await response.json();
+    console.log("data", data);
+    
+    const items = data.collection ? data.collection.map((item) => ({
+      _id: item._id,
+      name: item.name,
+      size: item.size,
+      type: item.type,
+      image: item.image,
+      createdAt: item.createdAt,
+    })) : [];
+
+    console.log("items", items);
+    
+    const user = {
+      username: data.username,
+      bio: data.bio,
+      profile: data.profile,
+      collection: items,
+      collectionCount: items.length,
+    };
+
+    console.log("user", user);
+
+    return user;
+  } catch (error) {
+    console.error("Error fetching user data and items:", error);
+    return {}; // Return an empty object or handle the error as per your requirement
+  }
+}
+
+
+
+
+// //fetch user data function
+export async function fetchUserData(username) {
+  try {
+    console.log("fetchUserData", username);
+    const response = await fetch(`http://localhost:8080/api/findUserAc/${username}`);
+    if (!response.ok) {
+      throw new Error("Request failed");
+    }
+    const data = await response.json();
+    console.log("data", data);
+    const items = {
+      _id: data._id,
+      username: data.username,
+      email: data.email,
+      bio: data.bio,
+      profile: data.profile,
+      item: data.item,
+    };
+
+    return items;
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return {}; // Return an empty array or handle the error as per your requirement
   }
 }
 
