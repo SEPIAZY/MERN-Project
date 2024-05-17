@@ -25,6 +25,18 @@ const port = 8080;
 app.get('/', (req, res) => {
     res.status(201).json("Home GET Request");
 });
+/** HTTP GET Request */
+app.get('/testdb', (req, res) => {
+    connect().then(() => {
+        try {
+            res.status(201).json("Connected DB");
+        } catch (error) {
+            console.log('Cannot connect to the server')
+        }
+    }).catch(error => {
+        console.log("Invalid database connection...!");
+    })
+});
 
 
 /** api routes */
