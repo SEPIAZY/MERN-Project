@@ -16,7 +16,7 @@ export async function getUsername() {
 /** authenticate function */
 export async function authenticate(username) {
   try {
-    return await axios.post("http://localhost:8080/api/authenticate", {
+    return await axios.post( process.env.REACT_APP_SERVER_DOMAIN + "/api/authenticate", {
       username,
     });
   } catch (error) {
@@ -28,7 +28,7 @@ export async function authenticate(username) {
 export async function getUser({ username }) {
   try {
     const { data } = await axios.get(
-      `http://localhost:8080/api/user/${username}`
+      process.env.REACT_APP_SERVER_DOMAIN + `/api/user/${username}`
     );
     return { data };
   } catch (error) {
@@ -44,13 +44,13 @@ export async function registerUser(credentials) {
     const {
       data: { msg },
       status,
-    } = await axios.post(`http://localhost:8080/api/register`, credentials);
+    } = await axios.post(process.env.REACT_APP_SERVER_DOMAIN + `/api/register`, credentials);
 
     let { username, email } = credentials;
 
     /** send email */
     if (status === 201) {
-      await axios.post("http://localhost:8080/api/registerMail", {
+      await axios.post(process.env.REACT_APP_SERVER_DOMAIN +"/api/registerMail", {
         username,
         userEmail: email,
         text: msg,
@@ -67,7 +67,7 @@ export async function registerUser(credentials) {
 export async function verifyPassword({ username, password }) {
   try {
     if (username) {
-      const { data } = await axios.post("http://localhost:8080/api/login", {
+      const { data } = await axios.post(process.env.REACT_APP_SERVER_DOMAIN + "/api/login", {
         username,
         password,
       });
@@ -84,7 +84,7 @@ export async function updateUser(response) {
   try {
     const token = await localStorage.getItem("token");
     const data = await axios.put(
-      "http://localhost:8080/api/updateuser",
+      process.env.REACT_APP_SERVER_DOMAIN + "/api/updateuser",
       response,
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -101,7 +101,7 @@ export async function generateOTP(username) {
     const {
       data: { code },
       status,
-    } = await axios.get("http://localhost:8080/api/generateOTP", {
+    } = await axios.get(process.env.REACT_APP_SERVER_DOMAIN + "api/generateOTP", {
       params: { username },
     });
 
@@ -111,7 +111,7 @@ export async function generateOTP(username) {
         data: { email },
       } = await getUser({ username });
       let text = `Your Password Recovery OTP is ${code}. Verify and recover your password.`;
-      await axios.post("http://localhost:8080/api/registerMail", {
+      await axios.post(process.env.REACT_APP_SERVER_DOMAIN + "/api/registerMail", {
         username,
         userEmail: email,
         text,
@@ -128,7 +128,7 @@ export async function generateOTP(username) {
 export async function verifyOTP({ username, code }) {
   try {
     const { data, status } = await axios.get(
-      "http://localhost:8080/api/verifyOTP",
+      process.env.REACT_APP_SERVER_DOMAIN + "/api/verifyOTP",
       { params: { username, code } }
     );
     return { data, status };
@@ -141,7 +141,7 @@ export async function verifyOTP({ username, code }) {
 export async function resetPassword({ username, password }) {
   try {
     const { data, status } = await axios.put(
-      "http://localhost:8080/api/resetPassword",
+      process.env.REACT_APP_SERVER_DOMAIN + "/api/resetPassword",
       { username, password }
     );
     return Promise.resolve({ data, status });
@@ -154,7 +154,7 @@ export async function resetPassword({ username, password }) {
 export async function addItem(item) {
   try {
     const { data } = await axios.post(
-      "http://localhost:8080/api/additem",
+      process.env.REACT_APP_SERVER_DOMAIN + "/api/additem",
       item
     );
     return Promise.resolve({ data });
@@ -166,7 +166,7 @@ export async function addItem(item) {
 //get number of items
 export async function getNumberOfItems() {
   try {
-    const response = await fetch("http://localhost:8080/api/getitem");
+    const response = await fetch(process.env.REACT_APP_SERVER_DOMAIN + "/api/getitem");
     //console.log(response)
     if (!response.ok) {
       throw new Error("Request failed");
