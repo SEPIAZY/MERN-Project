@@ -28,15 +28,14 @@ app.get('/', (req, res) => {
 });
 /** HTTP GET Request */
 app.get('/testdb', (req, res) => {
-    connect().then(() => {
-        try {
-            res.status(201).json("Connected DB");
-        } catch (error) {
-            res.status(500).json(error);
-        }
-    }).catch(error => {
-        res.status(500).json(error);
-    })
+    mongoose.connect("mongodb+srv://yeez2615:GmVj8q9qdXEvXMRU@cluster0.1dqnpuf.mongodb.net/?retryWrites=true&w=majority").then(() => {
+    
+    console.log("Mongodb connected sdsdsdsd");
+
+  }).catch((err) => {
+    console.log({ err });
+    process.exit(1);
+  });
 });
 
 mongoose.connect("mongodb+srv://yeez2615:GmVj8q9qdXEvXMRU@cluster0.1dqnpuf.mongodb.net/?retryWrites=true&w=majority").then(() => {
