@@ -31,10 +31,10 @@ app.get('/testdb', (req, res) => {
         try {
             res.status(201).json("Connected DB");
         } catch (error) {
-            console.log('Cannot connect to the server')
+            res.status(500).json(error);
         }
     }).catch(error => {
-        console.log("Invalid database connection...!");
+        res.status(500).json(error);
     })
 });
 
