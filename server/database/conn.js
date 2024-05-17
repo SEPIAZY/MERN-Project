@@ -4,19 +4,23 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 import ENV from "../config.js";
 
 async function connect() {
-  const mongod = await MongoMemoryServer.create();
-  const getUri = mongod.getUri();
+//   const mongod = await MongoMemoryServer.create();
+  const mongod = new MongoMemoryServer();
+  await mongod.start();
+  const mongoUri = mongod.getUri();
 
   mongoose.set("strictQuery", true);
   // const db = await mongoose.connect(getUri);
   const db = await mongoose.connect(
-    "mongodb+srv://riw:Vha315Sfv0QM44ki@newcluster.fxldupt.mongodb.net/?retryWrites=true&w=majority" || getUri
+    ENV.ATLAS_URI || mongoUri
     ,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }
   );
+
+
   console.log("Database Connected ...");
   return db;
 }
