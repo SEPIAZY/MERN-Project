@@ -1,4 +1,4 @@
-import bearbrick from '../model/bearbrick.model.js'
+import bearbrick from '../model/Bearbrick.model.js'
 import request from '../model/request.model.js'
 import UserModel from '../model/User.model.js'
 

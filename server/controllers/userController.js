@@ -1,6 +1,6 @@
 import UserModel from "../model/User.model.js";
 import RequestModel from "../model/request.model.js";
-import Bearbrick  from "../model/bearbrick.model.js";
+import Bearbrick  from "../model/Bearbrick.model.js";
 
 //update item in user collection
 export async function updateCollection(req, res) {
