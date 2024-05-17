@@ -5,6 +5,10 @@ import connect from './database/conn.js';
 import router from './router/route.js';
 import http from 'http';
 
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const app = express();
 const ser  = http.createServer(app);
 
@@ -39,4 +43,4 @@ connect().then(() => {
     console.log("Invalid database connection...!");
 })
 
-module.exports = app
+export default app
