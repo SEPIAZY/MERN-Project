@@ -184,7 +184,7 @@ export async function getNumberOfItems() {
 //get name, size, type, image of items
 export async function getItemsData() {
   try {
-    const response = await fetch("http://localhost:8080/api/getitem");
+    const response = await fetch(process.env.REACT_APP_SERVER_DOMAIN + "/api/getitem");
     if (!response.ok) {
       throw new Error("Request failed");
     }
@@ -211,7 +211,7 @@ export async function getItemsData() {
 export async function deleteItem(itemId) {
   try {
     const response = await fetch(
-      `http://localhost:8080/api/deleteitem/${itemId}`,
+      process.env.REACT_APP_SERVER_DOMAIN + `/api/deleteitem/${itemId}`,
       {
         method: "DELETE",
       }
@@ -235,7 +235,7 @@ export async function searchItem(searchItem) {
     // console.log(searchTerm)
     const encodedSearchTerm = encodeURIComponent(name);
     // console.log(encodedSearchTerm)
-    let api_sent = `http://localhost:8080/api/getAllCards?`;
+    let api_sent = process.env.REACT_APP_SERVER_DOMAIN + `/api/getAllCards?`;
     let check = false;
     if (_id) {
       if (check) {
@@ -301,7 +301,7 @@ export async function searchItem(searchItem) {
 export async function updateCards(id, item) {
   try {
     const { data } = await axios.put(
-      `http://localhost:8080/api/updateitem/${id}`,
+      process.env.REACT_APP_SERVER_DOMAIN + `/api/updateitem/${id}`,
       item
     );
     return Promise.resolve({ data });
@@ -316,7 +316,7 @@ export async function updateUserCollection(userid, likeditemid) {
     // console.log("userid",userid,"likeditemid",likeditemid)
 
     const { data } = await axios.put(
-      `http://localhost:8080/api/updatecollection/${userid}`,
+      process.env.REACT_APP_SERVER_DOMAIN + `/api/updatecollection/${userid}`,
       { likeditemid }
     );
     return Promise.resolve({ data });
@@ -330,7 +330,7 @@ export async function deleteUserCollection(userid, itemId) {
   try {
     // console.log("deleteUserCollection",userid,itemId)
     const response = await fetch(
-      `http://localhost:8080/api/deleteUserCollection/${userid}/${itemId}`,
+      process.env.REACT_APP_SERVER_DOMAIN + `/api/deleteUserCollection/${userid}/${itemId}`,
       {
         method: "DELETE",
       }
@@ -350,7 +350,7 @@ export async function deleteUserCollection(userid, itemId) {
 export async function userRequestItem(item) {
   try {
     const { data } = await axios.post(
-      "http://localhost:8080/api/userRequest",
+      process.env.REACT_APP_SERVER_DOMAIN + "/api/userRequest",
       item
     );
     return Promise.resolve({ data });
@@ -362,7 +362,7 @@ export async function userRequestItem(item) {
 //get user request item function
 export async function getUserRequestItem() {
   try {
-    const response = await fetch(`http://localhost:8080/api/getUserRequest`);
+    const response = await fetch(process.env.REACT_APP_SERVER_DOMAIN + `/api/getUserRequest`);
     if (!response.ok) {
       throw new Error("Request failed");
     }
@@ -390,7 +390,7 @@ export async function deleteUserRequestItem(itemId) {
   try {
     console.log("deleteUserRequestItem", itemId);
     const response = await fetch(
-      `http://localhost:8080/api/deleteUserRequest/${itemId}`,
+      process.env.REACT_APP_SERVER_DOMAIN + `/api/deleteUserRequest/${itemId}`,
       {
         method: "DELETE",
       }
@@ -410,7 +410,7 @@ export async function deleteUserRequestItem(itemId) {
 export async function updateUserRequestItem(id, item) {
   try {
     const { data } = await axios.put(
-      `http://localhost:8080/api/updateUserRequest/${id}`,
+      process.env.REACT_APP_SERVER_DOMAIN + `/api/updateUserRequest/${id}`,
       item
     );
     return Promise.resolve({ data });
@@ -422,7 +422,7 @@ export async function updateUserRequestItem(id, item) {
 //get user account function
 export async function getUserAc({}) {
   try {
-    const response = await fetch(`http://localhost:8080/api/getUserAc`);
+    const response = await fetch(process.env.REACT_APP_SERVER_DOMAIN + `/api/getUserAc`);
     if (!response.ok) {
       throw new Error("Request failed");
     }
@@ -448,7 +448,7 @@ export async function deleteUserAc(itemId) {
   try {
     // console.log("deleteUserAc", itemId);
     const response = await fetch(
-      `http://localhost:8080/api/deleteUserAc/${itemId}`,
+      process.env.REACT_APP_SERVER_DOMAIN + `/api/deleteUserAc/${itemId}`,
       {
         method: "DELETE",
       }
@@ -473,9 +473,9 @@ export async function findUserAc({ text = '' }) {
     let response;
 
     if (encodedSearchTerm) {
-      response = await fetch(`http://localhost:8080/api/findUserAc?username=${encodedSearchTerm}`);
+      response = await fetch(process.env.REACT_APP_SERVER_DOMAIN + `/api/findUserAc?username=${encodedSearchTerm}`);
     } else {
-      response = await fetch(`http://localhost:8080/api/findUserAc`);
+      response = await fetch(process.env.REACT_APP_SERVER_DOMAIN + `/api/findUserAc`);
     }
     
 
@@ -568,7 +568,7 @@ export async function findUserAc({ text = '' }) {
 // }
 export async function fetchOtherUserCollection(userid) {
   try {
-    const response = await fetch(`http://localhost:8080/api/fetchOtherUserCollection/${userid}`);
+    const response = await fetch(process.env.REACT_APP_SERVER_DOMAIN + `/api/fetchOtherUserCollection/${userid}`);
     if (!response.ok) {
       throw new Error("Request failed");
     }
@@ -610,7 +610,7 @@ export async function fetchOtherUserCollection(userid) {
 export async function fetchUserData(username) {
   try {
     console.log("fetchUserData", username);
-    const response = await fetch(`http://localhost:8080/api/findUserAc/${username}`);
+    const response = await fetch(process.env.REACT_APP_SERVER_DOMAIN + `/api/findUserAc/${username}`);
     if (!response.ok) {
       throw new Error("Request failed");
     }
